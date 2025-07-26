@@ -1,14 +1,16 @@
 import "./globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { AuthProvider } from "./providers/AuthProvider";
+import Providers from "@/components/Providers";
 
 export const metadata = {
-  title: "Prague Architecture",
+  title: "Latek Mimarlık",
   description: "Professional architecture and design services",
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="tr">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -34,7 +36,11 @@ export default function RootLayout({ children }) {
         <link rel="stylesheet" href="/css/google_map.min.css" />
         <link rel="stylesheet" href="/css/style.css" />
       </head>
-      <body>{children}</body>
+      <body>
+        <AuthProvider>
+          <Providers>{children}</Providers>
+        </AuthProvider>
+      </body>
     </html>
   );
 }
