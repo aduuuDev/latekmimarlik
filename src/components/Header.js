@@ -5,6 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { useHamburgerMenu } from "../hooks/useHamburgerMenu";
 import { getAllServices } from "../utils/mockData";
+import LanguageSwitcher from "./LanguageSwitcher";
+import { useLanguage } from "../context/LanguageContext";
 
 const Header = ({ theme = "light" }) => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -14,6 +16,9 @@ const Header = ({ theme = "light" }) => {
 
   // Get all services for dynamic menu
   const services = getAllServices();
+  
+  // Get current language
+  const { language } = useLanguage();
 
   // Scroll davranışı için useEffect
   useEffect(() => {
@@ -158,6 +163,11 @@ const Header = ({ theme = "light" }) => {
           <a href="#" onClick={(e) => e.preventDefault()}>
             <i></i>
           </a>
+        </div>
+
+        {/* LANGUAGE SWITCHER */}
+        <div className="prague-language-switcher" style={{ marginRight: "15px" }}>
+          <LanguageSwitcher mode="dropdown" />
         </div>
 
         {/* SOCIAL */}
