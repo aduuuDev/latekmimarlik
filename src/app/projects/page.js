@@ -284,7 +284,10 @@ export default function WorkGrid() {
                               {project.year}
                             </div>
                             <h3 className="project-list-title">
-                              <Link href={`/${project.slug}`} target="_self">
+                              <Link
+                                href={`/projects/${project.slug}`}
+                                target="_self"
+                              >
                                 {project.title}
                               </Link>
                             </h3>
@@ -292,7 +295,7 @@ export default function WorkGrid() {
                               <p>{project.excerpt}</p>
                             </div>
                             <Link
-                              href={`/${project.slug}`}
+                              href={`/projects/${project.slug}`}
                               className="project-list-link a-btn-arrow-2"
                               target="_self"
                             >
