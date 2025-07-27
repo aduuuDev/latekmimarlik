@@ -5,6 +5,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import AdminLayout from '@/components/AdminLayout';
+import FileUploader from '@/components/FileUploader';
 import styles from '../page.module.css';
 
 export default function HomepageEditor() {
@@ -44,10 +45,41 @@ export default function HomepageEditor() {
           .filter(lang => lang.isActive)
           .sort((a, b) => a.order - b.order);
         
-        setLanguages(activeLanguages);
+        if (activeLanguages.length > 0) {
+          setLanguages(activeLanguages);
+        } else {
+          // Eğer hiç aktif dil yoksa varsayılan dil ekleyerek potansiyel hataları önle
+          setLanguages([{ 
+            code: 'tr', 
+            name: 'Türkçe', 
+            nativeName: 'Türkçe', 
+            rtl: false, 
+            isDefault: true,
+            order: 1
+          }]);
+        }
+      } else {
+        // API yanıtında başarısızlık durumunda da varsayılan bir dil ekle
+        setLanguages([{ 
+          code: 'tr', 
+          name: 'Türkçe', 
+          nativeName: 'Türkçe', 
+          rtl: false, 
+          isDefault: true,
+          order: 1
+        }]);
       }
     } catch (error) {
       console.error('Dil verileri çekilirken hata:', error);
+      // Hata durumunda da varsayılan bir dil ekleyerek UI'ın çalışmasını sağla
+      setLanguages([{ 
+        code: 'tr', 
+        name: 'Türkçe', 
+        nativeName: 'Türkçe', 
+        rtl: false, 
+        isDefault: true,
+        order: 1
+      }]);
     }
   };
 
@@ -156,6 +188,64 @@ export default function HomepageEditor() {
     }
   };
 
+  // Dil sekmelerini render eden yardımcı fonksiyon
+  const renderLanguageTabs = (section, field, placeholder = '') => {
+    return (
+      <div className={styles.languageTabs}>
+        {languages.map((lang) => (
+          <div 
+            key={lang.code} 
+            className={`${styles.langTab} ${lang.rtl ? styles.rtlLangTab : ''}`}
+          >
+            <label>{lang.nativeName}:</label>
+            <input
+              type="text"
+              value={homepageData?.[section]?.[field]?.[lang.code] || ''}
+              onChange={(e) => {
+                const newValue = {
+                  ...(homepageData?.[section]?.[field] || {}),
+                  [lang.code]: e.target.value
+                };
+                handleInputChange(section, field, newValue);
+              }}
+              placeholder={placeholder ? `${placeholder} (${lang.nativeName})` : `${lang.nativeName}`}
+              dir={lang.rtl ? 'rtl' : 'ltr'}
+            />
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  // Dil sekmelerini textarea olarak render eden yardımcı fonksiyon
+  const renderLanguageTextareas = (section, field, placeholder = '', rows = 3) => {
+    return (
+      <div className={styles.languageTabs}>
+        {languages.map((lang) => (
+          <div 
+            key={lang.code} 
+            className={`${styles.langTab} ${lang.rtl ? styles.rtlLangTab : ''}`}
+          >
+            <label>{lang.nativeName}:</label>
+            <textarea
+              rows={rows}
+              value={homepageData?.[section]?.[field]?.[lang.code] || ''}
+              onChange={(e) => {
+                const newValue = {
+                  ...(homepageData?.[section]?.[field] || {}),
+                  [lang.code]: e.target.value
+                };
+                handleInputChange(section, field, newValue);
+              }}
+              placeholder={placeholder ? `${placeholder} (${lang.nativeName})` : `${lang.nativeName}`}
+              dir={lang.rtl ? 'rtl' : 'ltr'}
+            />
+          </div>
+        ))}
+      </div>
+    );
+  };
+
   // Yükleniyor durumu
   if (loading || status === 'loading') {
     return (
@@ -245,192 +335,17 @@ export default function HomepageEditor() {
               <h2>Hero Banner Section</h2>
               <div className={styles.formGroup}>
                 <label>Subtitle:</label>
-                <div className={styles.languageTabs}>
-                  {languages.length > 0 ? (
-                    languages.map((lang) => (
-                      <div 
-                        key={lang.code} 
-                        className={`${styles.langTab} ${lang.rtl ? styles.rtlLangTab : ''}`}
-                      >
-                        <label>{lang.nativeName}:</label>
-                        <input
-                          type="text"
-                          value={homepageData.heroBanner.subtitle?.[lang.code] || ''}
-                          onChange={(e) => {
-                            const newValue = {
-                              ...(homepageData.heroBanner.subtitle || {}),
-                              [lang.code]: e.target.value
-                            };
-                            handleInputChange('heroBanner', 'subtitle', newValue);
-                          }}
-                          placeholder={`${lang.nativeName} alt başlık`}
-                          dir={lang.rtl ? 'rtl' : 'ltr'}
-                        />
-                      </div>
-                    ))
-                  ) : (
-                    // Fallback - eğer dil verisi yüklenmediyse veya yoksa varsayılan dilleri göster
-                    <>
-                      <div className={styles.langTab}>
-                        <label>Türkçe:</label>
-                        <input
-                          type="text"
-                          value={homepageData.heroBanner.subtitle?.tr || ''}
-                          onChange={(e) => {
-                            const newValue = {...(homepageData.heroBanner.subtitle || {}), tr: e.target.value};
-                            handleInputChange('heroBanner', 'subtitle', newValue);
-                          }}
-                          placeholder="Türkçe alt başlık"
-                        />
-                      </div>
-                      <div className={styles.langTab}>
-                        <label>English:</label>
-                        <input
-                          type="text"
-                          value={homepageData.heroBanner.subtitle?.en || ''}
-                          onChange={(e) => {
-                            const newValue = {...(homepageData.heroBanner.subtitle || {}), en: e.target.value};
-                            handleInputChange('heroBanner', 'subtitle', newValue);
-                          }}
-                          placeholder="English subtitle"
-                        />
-                      </div>
-                      <div className={styles.langTab}>
-                        <label>Deutsch:</label>
-                        <input
-                          type="text"
-                          value={homepageData.heroBanner.subtitle?.de || ''}
-                          onChange={(e) => {
-                            const newValue = {...(homepageData.heroBanner.subtitle || {}), de: e.target.value};
-                            handleInputChange('heroBanner', 'subtitle', newValue);
-                          }}
-                          placeholder="Deutsch Untertitel"
-                        />
-                      </div>
-                      <div className={styles.langTab}>
-                        <label>العربية:</label>
-                        <input
-                          type="text"
-                          value={homepageData.heroBanner.subtitle?.ar || ''}
-                          onChange={(e) => {
-                            const newValue = {...(homepageData.heroBanner.subtitle || {}), ar: e.target.value};
-                            handleInputChange('heroBanner', 'subtitle', newValue);
-                          }}
-                          placeholder="العنوان الفرعي بالعربية"
-                          dir="rtl"
-                        />
-                      </div>
-                    </>
-                  )}
-                </div>
+                {renderLanguageTabs('heroBanner', 'subtitle', 'Alt başlık')}
               </div>
               
               <div className={styles.formGroup}>
                 <label>Title:</label>
-                <div className={styles.languageTabs}>
-                  <div className={styles.langTab}>
-                    <label>Türkçe:</label>
-                    <input
-                      type="text"
-                      value={homepageData.heroBanner.title?.tr || ''}
-                      onChange={(e) => {
-                        const newValue = {...(homepageData.heroBanner.title || {}), tr: e.target.value};
-                        handleInputChange('heroBanner', 'title', newValue);
-                      }}
-                      placeholder="Türkçe başlık"
-                    />
-                  </div>
-                  <div className={styles.langTab}>
-                    <label>English:</label>
-                    <input
-                      type="text"
-                      value={homepageData.heroBanner.title?.en || ''}
-                      onChange={(e) => {
-                        const newValue = {...(homepageData.heroBanner.title || {}), en: e.target.value};
-                        handleInputChange('heroBanner', 'title', newValue);
-                      }}
-                      placeholder="English title"
-                    />
-                  </div>
-                  <div className={styles.langTab}>
-                    <label>Deutsch:</label>
-                    <input
-                      type="text"
-                      value={homepageData.heroBanner.title?.de || ''}
-                      onChange={(e) => {
-                        const newValue = {...(homepageData.heroBanner.title || {}), de: e.target.value};
-                        handleInputChange('heroBanner', 'title', newValue);
-                      }}
-                      placeholder="Deutsch Titel"
-                    />
-                  </div>
-                  <div className={styles.langTab}>
-                    <label>العربية:</label>
-                    <input
-                      type="text"
-                      value={homepageData.heroBanner.title?.ar || ''}
-                      onChange={(e) => {
-                        const newValue = {...(homepageData.heroBanner.title || {}), ar: e.target.value};
-                        handleInputChange('heroBanner', 'title', newValue);
-                      }}
-                      placeholder="العنوان بالعربية"
-                    />
-                  </div>
-                </div>
+                {renderLanguageTabs('heroBanner', 'title', 'Başlık')}
               </div>
               
               <div className={styles.formGroup}>
                 <label>Button Text:</label>
-                <div className={styles.languageTabs}>
-                  <div className={styles.langTab}>
-                    <label>Türkçe:</label>
-                    <input
-                      type="text"
-                      value={homepageData.heroBanner.buttonText?.tr || ''}
-                      onChange={(e) => {
-                        const newValue = {...(homepageData.heroBanner.buttonText || {}), tr: e.target.value};
-                        handleInputChange('heroBanner', 'buttonText', newValue);
-                      }}
-                      placeholder="Türkçe buton metni"
-                    />
-                  </div>
-                  <div className={styles.langTab}>
-                    <label>English:</label>
-                    <input
-                      type="text"
-                      value={homepageData.heroBanner.buttonText?.en || ''}
-                      onChange={(e) => {
-                        const newValue = {...(homepageData.heroBanner.buttonText || {}), en: e.target.value};
-                        handleInputChange('heroBanner', 'buttonText', newValue);
-                      }}
-                      placeholder="English button text"
-                    />
-                  </div>
-                  <div className={styles.langTab}>
-                    <label>Deutsch:</label>
-                    <input
-                      type="text"
-                      value={homepageData.heroBanner.buttonText?.de || ''}
-                      onChange={(e) => {
-                        const newValue = {...(homepageData.heroBanner.buttonText || {}), de: e.target.value};
-                        handleInputChange('heroBanner', 'buttonText', newValue);
-                      }}
-                      placeholder="Deutsch Schaltflächentext"
-                    />
-                  </div>
-                  <div className={styles.langTab}>
-                    <label>العربية:</label>
-                    <input
-                      type="text"
-                      value={homepageData.heroBanner.buttonText?.ar || ''}
-                      onChange={(e) => {
-                        const newValue = {...(homepageData.heroBanner.buttonText || {}), ar: e.target.value};
-                        handleInputChange('heroBanner', 'buttonText', newValue);
-                      }}
-                      placeholder="نص الزر بالعربية"
-                    />
-                  </div>
-                </div>
+                {renderLanguageTabs('heroBanner', 'buttonText', 'Buton metni')}
               </div>
               <div className={styles.formGroup}>
                 <label>Button Link:</label>
@@ -441,12 +356,22 @@ export default function HomepageEditor() {
                 />
               </div>
               <div className={styles.formGroup}>
-                <label>Background Image URL:</label>
-                <input
-                  type="text"
-                  value={homepageData.heroBanner.backgroundImage || ''}
-                  onChange={(e) => handleInputChange('heroBanner', 'backgroundImage', e.target.value)}
-                />
+                <label>Background Image:</label>
+                <div className={styles.inputGroup}>
+                  <input
+                    type="text"
+                    className={styles.urlInput}
+                    value={homepageData.heroBanner.backgroundImage || ''}
+                    onChange={(e) => handleInputChange('heroBanner', 'backgroundImage', e.target.value)}
+                    placeholder="Image URL"
+                  />
+                  <FileUploader
+                    id="heroBannerBgImage"
+                    folder="homepage/hero"
+                    label="Görsel Yükle"
+                    onUpload={(data) => handleInputChange('heroBanner', 'backgroundImage', data.url)}
+                  />
+                </div>
               </div>
               {homepageData.heroBanner.backgroundImage && (
                 <div className={styles.imagePreview}>
@@ -629,12 +554,22 @@ export default function HomepageEditor() {
               </div>
               
               <div className={styles.formGroup}>
-                <label>Image URL:</label>
-                <input
-                  type="text"
-                  value={homepageData.numbersSection.image || ''}
-                  onChange={(e) => handleInputChange('numbersSection', 'image', e.target.value)}
-                />
+                <label>Image:</label>
+                <div className={styles.inputGroup}>
+                  <input
+                    type="text"
+                    className={styles.urlInput}
+                    value={homepageData.numbersSection.image || ''}
+                    onChange={(e) => handleInputChange('numbersSection', 'image', e.target.value)}
+                    placeholder="Image URL"
+                  />
+                  <FileUploader
+                    id="numbersSectionImage"
+                    folder="homepage/numbers"
+                    label="Görsel Yükle"
+                    onUpload={(data) => handleInputChange('numbersSection', 'image', data.url)}
+                  />
+                </div>
               </div>
               {homepageData.numbersSection.image && (
                 <div className={styles.imagePreview}>
@@ -825,12 +760,22 @@ export default function HomepageEditor() {
                 />
               </div>
               <div className={styles.formGroup}>
-                <label>Background Image URL:</label>
-                <input
-                  type="text"
-                  value={homepageData.servicesSection.backgroundImage || ''}
-                  onChange={(e) => handleInputChange('servicesSection', 'backgroundImage', e.target.value)}
-                />
+                <label>Background Image:</label>
+                <div className={styles.inputGroup}>
+                  <input
+                    type="text"
+                    className={styles.urlInput}
+                    value={homepageData.servicesSection.backgroundImage || ''}
+                    onChange={(e) => handleInputChange('servicesSection', 'backgroundImage', e.target.value)}
+                    placeholder="Image URL"
+                  />
+                  <FileUploader
+                    id="servicesSectionBgImage"
+                    folder="homepage/services"
+                    label="Görsel Yükle"
+                    onUpload={(data) => handleInputChange('servicesSection', 'backgroundImage', data.url)}
+                  />
+                </div>
               </div>
               {homepageData.servicesSection.backgroundImage && (
                 <div className={styles.imagePreview}>
@@ -1136,12 +1081,22 @@ export default function HomepageEditor() {
               </div>
               
               <div className={styles.formGroup}>
-                <label>Background Image URL:</label>
-                <input
-                  type="text"
-                  value={homepageData.blogSection.backgroundImage || ''}
-                  onChange={(e) => handleInputChange('blogSection', 'backgroundImage', e.target.value)}
-                />
+                <label>Background Image:</label>
+                <div className={styles.inputGroup}>
+                  <input
+                    type="text"
+                    className={styles.urlInput}
+                    value={homepageData.blogSection.backgroundImage || ''}
+                    onChange={(e) => handleInputChange('blogSection', 'backgroundImage', e.target.value)}
+                    placeholder="Image URL"
+                  />
+                  <FileUploader
+                    id="blogSectionBgImage"
+                    folder="homepage/blog"
+                    label="Görsel Yükle"
+                    onUpload={(data) => handleInputChange('blogSection', 'backgroundImage', data.url)}
+                  />
+                </div>
               </div>
               {homepageData.blogSection.backgroundImage && (
                 <div className={styles.imagePreview}>

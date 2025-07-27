@@ -12,12 +12,21 @@ export async function GET() {
       .select('code name nativeName rtl isDefault')
       .lean();
     
+    
+    
     return new Response(JSON.stringify({
       success: true,
-      languages
+      languages,
+      timestamp: new Date().toISOString() // Add timestamp for debugging cache issues
     }), {
       status: 200,
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 
+        'Content-Type': 'application/json',
+        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0',
+        'Surrogate-Control': 'no-store'
+      }
     });
   } catch (error) {
     console.error('Dil verileri getirme hatası:', error);
@@ -33,10 +42,22 @@ export async function GET() {
     return new Response(JSON.stringify({
       success: true,
       languages: defaultLanguages,
-      isDefault: true
+      isDefault: true,
+      timestamp: new Date().toISOString(),
+      error: error.message
     }), {
       status: 200,
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 
+        'Content-Type': 'application/json',
+        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0',
+        'Surrogate-Control': 'no-store'
+      }
     });
   }
 }
+
+// Add headers for Next.js cache configuration
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;

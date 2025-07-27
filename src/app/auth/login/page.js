@@ -122,7 +122,7 @@ export default function LoginPage() {
     <div className={styles.container}>
       <div className={styles.loginForm}>
         <div className={styles.logo}>
-          <Image src="/img/logo.png" alt="Latek Mimarlık" width={160} height={50} />
+          <Image src="/img/logo.png" alt="Admin Panel" width={160} height={50} />
         </div>
         
         {showSetup ? (
@@ -193,7 +193,7 @@ export default function LoginPage() {
         ) : (
           <>
             <h1>Admin Girişi</h1>
-            <p>Latek Mimarlık CMS&apos;e hoş geldiniz. Lütfen giriş yapın.</p>
+            <p>Yönetim Paneline hoş geldiniz. Lütfen giriş yapın.</p>
             
             {error && <div className={styles.error}>{error}</div>}
             

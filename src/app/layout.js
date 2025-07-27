@@ -2,9 +2,10 @@ import "./globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { AuthProvider } from "./providers/AuthProvider";
 import Providers from "@/components/Providers";
+import ClientWrapper from './ClientWrapper';
 
 export const metadata = {
-  title: "Latek Mimarlık",
+  title: "Latek Mimarlık", // Varsayılan başlık, client tarafında güncellenecek
   description: "Professional architecture and design services",
 };
 
@@ -19,7 +20,7 @@ export default function RootLayout({ children }) {
         {/* Google Fonts */}
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700"
+          href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700&display=optional"
         />
 
         {/* CSS Files */}
@@ -38,7 +39,11 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <AuthProvider>
-          <Providers>{children}</Providers>
+          <Providers>
+            <ClientWrapper>
+              {children}
+            </ClientWrapper>
+          </Providers>
         </AuthProvider>
       </body>
     </html>
