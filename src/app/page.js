@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React, { useEffect, useState } from "react";
 import MainLayout from "../layouts/MainLayout";
@@ -18,26 +18,26 @@ const HomePage = () => {
   const [homepageData, setHomepageData] = useState(null);
   const [loading, setLoading] = useState(true);
   const { language } = useLanguage();
-  
+
   useEffect(() => {
     // Anasayfa verilerini API'den çek
     const fetchHomepageData = async () => {
       try {
-        const response = await fetch('/api/homepage');
+        const response = await fetch("/api/homepage");
         const result = await response.json();
-        
+
         if (result.success) {
           setHomepageData(result.data);
         } else {
-          console.error('Anasayfa verisi alınamadı:', result.message);
+          console.error("Anasayfa verisi alınamadı:", result.message);
         }
       } catch (error) {
-        console.error('Anasayfa verisi çekilirken hata oluştu:', error);
+        console.error("Anasayfa verisi çekilirken hata oluştu:", error);
       } finally {
         setLoading(false);
       }
     };
-    
+
     fetchHomepageData();
   }, []);
   return (
@@ -50,7 +50,10 @@ const HomePage = () => {
             <div className="top-banner no-padd big fullheight light">
               <span className="overlay"></span>
               <Image
-                src={homepageData?.heroBanner?.backgroundImage || "https://picsum.photos/1920/1080"}
+                src={
+                  homepageData?.heroBanner?.backgroundImage ||
+                  "https://picsum.photos/1920/1080"
+                }
                 alt="banner image"
                 width={1920}
                 height={1080}
@@ -68,10 +71,18 @@ const HomePage = () => {
               <div className="content">
                 <div className="prague-svg-animation-text"></div>
                 <div className="subtitle">
-                  {getText(homepageData?.heroBanner?.subtitle, language, "WE DO INTERIOR & EXTERIOR OF")}
+                  {getText(
+                    homepageData?.heroBanner?.subtitle,
+                    language,
+                    "WE DO INTERIOR & EXTERIOR OF"
+                  )}
                 </div>
                 <h1 className="title">
-                  {getText(homepageData?.heroBanner?.title, language, "Tampere Arena Libeskind")}
+                  {getText(
+                    homepageData?.heroBanner?.title,
+                    language,
+                    "Tampere Arena Libeskind"
+                  )}
                 </h1>
                 <Link
                   href={homepageData?.heroBanner?.buttonLink || "/contact-us"}
@@ -79,7 +90,11 @@ const HomePage = () => {
                   target="_blank"
                 >
                   <span className="a-btn-line"></span>
-                  {getText(homepageData?.heroBanner?.buttonText, language, "BİZE ULAŞIN")}
+                  {getText(
+                    homepageData?.heroBanner?.buttonText,
+                    language,
+                    "BİZE ULAŞIN"
+                  )}
                 </Link>
               </div>
               <div className="top-banner-cursor"></div>
@@ -96,7 +111,10 @@ const HomePage = () => {
                 <div className="figures">{/* triangle */}</div>
                 <div className="counter-outer" style={{ padding: "10px" }}>
                   <Image
-                    src={homepageData?.numbersSection?.image || "https://picsum.photos/seed/architecture-numbers/600/400"}
+                    src={
+                      homepageData?.numbersSection?.image ||
+                      "https://picsum.photos/seed/architecture-numbers/600/400"
+                    }
                     alt="numbers photo"
                     width={600}
                     height={400}
@@ -111,15 +129,26 @@ const HomePage = () => {
             <div className="padd-only">
               <div className="heading left dark">
                 <div className="subtitle">
-                  {getText(homepageData?.numbersSection?.subtitle, language, "NUMBERS")}
+                  {getText(
+                    homepageData?.numbersSection?.subtitle,
+                    language,
+                    "NUMBERS"
+                  )}
                 </div>
                 <h2 className="title">
                   {homepageData?.numbersSection?.title ? (
-                    getText(homepageData.numbersSection.title, language, "Make with love\nall what we do.").split('\n').map((line, i, arr) => (
-                      <React.Fragment key={i}>
-                        {line}{i < arr.length - 1 && <br />}
-                      </React.Fragment>
-                    ))
+                    getText(
+                      homepageData.numbersSection.title,
+                      language,
+                      "Make with love\nall what we do."
+                    )
+                      .split("\n")
+                      .map((line, i, arr) => (
+                        <React.Fragment key={i}>
+                          {line}
+                          {i < arr.length - 1 && <br />}
+                        </React.Fragment>
+                      ))
                   ) : (
                     <>
                       Make with love
@@ -130,17 +159,21 @@ const HomePage = () => {
                 </h2>
                 <div className="content padding-xs-40b">
                   {homepageData?.numbersSection?.content ? (
-                    getText(homepageData.numbersSection.content, language, "Our team takes over everything, from an idea and concept development to realization. We believe in traditions and incorporate them within our innovations. All our projects incorporate a unique artistic image and functional solutions.\n\nClient is the soul of the project. Our main goal is to illustrate his/hers values and individuality.").split('\n\n').map((paragraph, i) => (
-                      <p key={i}>{paragraph}</p>
-                    ))
+                    getText(
+                      homepageData.numbersSection.content,
+                      language,
+                      "Our team takes over everything, from an idea and concept development to realization. We believe in traditions and incorporate them within our innovations. All our projects incorporate a unique artistic image and functional solutions.\n\nClient is the soul of the project. Our main goal is to illustrate his/hers values and individuality."
+                    )
+                      .split("\n\n")
+                      .map((paragraph, i) => <p key={i}>{paragraph}</p>)
                   ) : (
                     <>
                       <p>
                         Our team takes over everything, from an idea and concept
                         development to realization. We believe in traditions and
-                        incorporate them within our innovations. All our projects
-                        incorporate a unique artistic image and functional
-                        solutions.
+                        incorporate them within our innovations. All our
+                        projects incorporate a unique artistic image and
+                        functional solutions.
                       </p>
                       <p>
                         Client is the soul of the project. Our main goal is to
@@ -163,7 +196,10 @@ const HomePage = () => {
               <div className="prague-shortcode-parent-img">
                 <span className="overlay"></span>
                 <Image
-                  src={homepageData?.servicesSection?.backgroundImage || "https://picsum.photos/seed/services-banner/1920/468"}
+                  src={
+                    homepageData?.servicesSection?.backgroundImage ||
+                    "https://picsum.photos/seed/services-banner/1920/468"
+                  }
                   alt="middle-banner image"
                   className="s-img-switch"
                   width={1920}
@@ -177,10 +213,18 @@ const HomePage = () => {
               <div className="prague-shortcode-content-wrapp">
                 <div className="prague-shortcode-heading light left">
                   <div className="parent-subtitle">
-                    {getText(homepageData?.servicesSection?.subtitle, language, "SERVICES")}
+                    {getText(
+                      homepageData?.servicesSection?.subtitle,
+                      language,
+                      "SERVICES"
+                    )}
                   </div>
                   <h2 className="parent-title">
-                    {getText(homepageData?.servicesSection?.title, language, "This is what we do.")}
+                    {getText(
+                      homepageData?.servicesSection?.title,
+                      language,
+                      "This is what we do."
+                    )}
                   </h2>
                 </div>
 
@@ -204,11 +248,17 @@ const HomePage = () => {
                 <div className="row">
                   <div className="col-sm-12 text-center">
                     <Link
-                      href={homepageData?.servicesSection?.buttonLink || "/services"}
+                      href={
+                        homepageData?.servicesSection?.buttonLink || "/services"
+                      }
                       className="load-btn a-btn-2 creative js-load-more-btn anima"
                     >
                       <span className="a-btn-line load"></span>
-                      {getText(homepageData?.servicesSection?.buttonText, language, "LOAD MORE")}
+                      {getText(
+                        homepageData?.servicesSection?.buttonText,
+                        language,
+                        "LOAD MORE"
+                      )}
                     </Link>
                   </div>
                 </div>
@@ -229,10 +279,18 @@ const HomePage = () => {
             <div className="padd-only-xs">
               <div className="heading left dark">
                 <div className="subtitle">
-                  {getText(homepageData?.projectsSection?.subtitle, language, "LAST PROJECTS")}
+                  {getText(
+                    homepageData?.projectsSection?.subtitle,
+                    language,
+                    "LAST PROJECTS"
+                  )}
                 </div>
                 <h2 className="title">
-                  {getText(homepageData?.projectsSection?.title, language, "Make it with passion.")}
+                  {getText(
+                    homepageData?.projectsSection?.title,
+                    language,
+                    "Make it with passion."
+                  )}
                 </h2>
               </div>
             </div>
@@ -248,7 +306,7 @@ const HomePage = () => {
                       <div className="project-grid-wrapper">
                         <Link
                           className="project-grid-item-img-link"
-                          href="/seascape-villa"
+                          href="/projects/seascape-villa"
                         >
                           <div className="project-grid-item-img">
                             <Image
@@ -262,7 +320,9 @@ const HomePage = () => {
                         </Link>
                         <div className="project-grid-item-content">
                           <h4 className="project-grid-item-title">
-                            <Link href="/seascape-villa">Seascape Villa</Link>
+                            <Link href="/projects/seascape-villa">
+                              Seascape Villa
+                            </Link>
                           </h4>
                           <div className="project-grid-item-category">
                             Aqaba, Jordan
@@ -276,7 +336,7 @@ const HomePage = () => {
                       <div className="project-grid-wrapper">
                         <Link
                           className="project-grid-item-img-link"
-                          href="/european-lard-station"
+                          href="/projects/european-lard-station"
                         >
                           <div className="project-grid-item-img">
                             <Image
@@ -290,7 +350,7 @@ const HomePage = () => {
                         </Link>
                         <div className="project-grid-item-content">
                           <h4 className="project-grid-item-title">
-                            <Link href="/european-lard-station">
+                            <Link href="/projects/european-lard-station">
                               European Lard Station
                             </Link>
                           </h4>
@@ -306,7 +366,7 @@ const HomePage = () => {
                       <div className="project-grid-wrapper">
                         <Link
                           className="project-grid-item-img-link"
-                          href="/yabroudi-villa"
+                          href="/projects/yabroudi-villa"
                         >
                           <div className="project-grid-item-img">
                             <Image
@@ -320,7 +380,9 @@ const HomePage = () => {
                         </Link>
                         <div className="project-grid-item-content">
                           <h4 className="project-grid-item-title">
-                            <Link href="/yabroudi-villa">Yabroudi Villa</Link>
+                            <Link href="/projects/yabroudi-villa">
+                              Yabroudi Villa
+                            </Link>
                           </h4>
                           <div className="project-grid-item-category">
                             Dubai, United Arab Emirates
@@ -334,11 +396,17 @@ const HomePage = () => {
                 <div className="row">
                   <div className="col-sm-12 text-center">
                     <Link
-                      href={homepageData?.projectsSection?.buttonLink || "/projects"}
+                      href={
+                        homepageData?.projectsSection?.buttonLink || "/projects"
+                      }
                       className="load-btn a-btn-2 creative js-load-more-btn anima"
                     >
                       <span className="a-btn-line load"></span>
-                      {getText(homepageData?.projectsSection?.buttonText, language, "LOAD MORE")}
+                      {getText(
+                        homepageData?.projectsSection?.buttonText,
+                        language,
+                        "LOAD MORE"
+                      )}
                     </Link>
                   </div>
                 </div>
@@ -356,7 +424,10 @@ const HomePage = () => {
               <div className="prague-shortcode-parent-img">
                 <span className="overlay"></span>
                 <Image
-                  src={homepageData?.blogSection?.backgroundImage || "https://picsum.photos/seed/clients-banner/1920/468"}
+                  src={
+                    homepageData?.blogSection?.backgroundImage ||
+                    "https://picsum.photos/seed/clients-banner/1920/468"
+                  }
                   alt="middle-banner image"
                   className="s-img-switch"
                   width={1920}
@@ -370,10 +441,18 @@ const HomePage = () => {
               <div className="prague-shortcode-content-wrapp">
                 <div className="prague-shortcode-heading light left">
                   <div className="parent-subtitle">
-                    {getText(homepageData?.blogSection?.subtitle, language, "BLOG")}
+                    {getText(
+                      homepageData?.blogSection?.subtitle,
+                      language,
+                      "BLOG"
+                    )}
                   </div>
                   <h2 className="parent-title">
-                    {getText(homepageData?.blogSection?.title, language, "Latest Insights From Our Experts.")}
+                    {getText(
+                      homepageData?.blogSection?.title,
+                      language,
+                      "Latest Insights From Our Experts."
+                    )}
                   </h2>
                 </div>
 
@@ -394,15 +473,26 @@ const HomePage = () => {
           <div className="col-sm-12 col-lg-offset-0 col-lg-6 col-md-offset-0 col-md-6 col-sm-offset-0 col-xs-12 padd-only-xs">
             <div className="heading left dark">
               <div className="subtitle">
-                {getText(homepageData?.contactSection?.subtitle, language, "CONTACT")}
+                {getText(
+                  homepageData?.contactSection?.subtitle,
+                  language,
+                  "CONTACT"
+                )}
               </div>
               <h2 className="title">
-                {getText(homepageData?.contactSection?.title, language, "Let's start new project.")}
+                {getText(
+                  homepageData?.contactSection?.title,
+                  language,
+                  "Let's start new project."
+                )}
               </h2>
               <div className="content">
                 <p>
-                  {getText(homepageData?.contactSection?.description, language,
-                    "Now, as you were able to get a picture of who we are, it is up to you to contact us and lay the foundation for a new and successful business relationship. Our team consists")}
+                  {getText(
+                    homepageData?.contactSection?.description,
+                    language,
+                    "Now, as you were able to get a picture of who we are, it is up to you to contact us and lay the foundation for a new and successful business relationship. Our team consists"
+                  )}
                 </p>
               </div>
             </div>
@@ -413,21 +503,29 @@ const HomePage = () => {
                     <div className="address-block-outer">
                       <span className="separator"></span>
                       <h4 className="address-title text-responsive-align">
-                        {getText(homepageData?.contactSection?.phoneTitle, language, "PHONE")}
+                        {getText(
+                          homepageData?.contactSection?.phoneTitle,
+                          language,
+                          "PHONE"
+                        )}
                       </h4>
                       <p className="text-responsive-align">
                         {homepageData?.contactSection?.phones ? (
-                          homepageData.contactSection.phones.map((phone, index) => (
-                            <React.Fragment key={index}>
-                              <a
-                                className="text-responsive-align"
-                                href={phone.link}
-                              >
-                                {phone.number}
-                              </a>
-                              {index < homepageData.contactSection.phones.length - 1 && <br />}
-                            </React.Fragment>
-                          ))
+                          homepageData.contactSection.phones.map(
+                            (phone, index) => (
+                              <React.Fragment key={index}>
+                                <a
+                                  className="text-responsive-align"
+                                  href={phone.link}
+                                >
+                                  {phone.number}
+                                </a>
+                                {index <
+                                  homepageData.contactSection.phones.length -
+                                    1 && <br />}
+                              </React.Fragment>
+                            )
+                          )
                         ) : (
                           <>
                             <a
@@ -456,21 +554,29 @@ const HomePage = () => {
                   <div className="address-block-outer">
                     <span className="separator"></span>
                     <h4 className="address-title text-responsive-align">
-                      {getText(homepageData?.contactSection?.emailTitle, language, "EMAIL")}
+                      {getText(
+                        homepageData?.contactSection?.emailTitle,
+                        language,
+                        "EMAIL"
+                      )}
                     </h4>
                     <p className="text-responsive-align">
                       {homepageData?.contactSection?.emails ? (
-                        homepageData.contactSection.emails.map((email, index) => (
-                          <React.Fragment key={index}>
-                            <a
-                              className="text-responsive-align"
-                              href={`mailto:${email.address}`}
-                            >
-                              {email.address}
-                            </a>
-                            {index < homepageData.contactSection.emails.length - 1 && <br />}
-                          </React.Fragment>
-                        ))
+                        homepageData.contactSection.emails.map(
+                          (email, index) => (
+                            <React.Fragment key={index}>
+                              <a
+                                className="text-responsive-align"
+                                href={`mailto:${email.address}`}
+                              >
+                                {email.address}
+                              </a>
+                              {index <
+                                homepageData.contactSection.emails.length -
+                                  1 && <br />}
+                            </React.Fragment>
+                          )
+                        )
                       ) : (
                         <>
                           <a

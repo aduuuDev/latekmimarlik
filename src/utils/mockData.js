@@ -347,10 +347,16 @@ export const projectData = [
     category: "House",
     location: "Dubai, UAE",
     title: "Seascape Villa",
-    image: "/img/home/51f1b143659493.57f77d5c9619a.jpg",
+    image: "https://picsum.photos/seed/seascape-villa/800/600",
     excerpt:
       "The Seascape Villas project constitutes one of the first urban interventions...",
+    description:
+      "The Seascape Villas project constitutes one of the first urban interventions in the new Dubai Waterfront development. The project consists of 15 luxury villas, each with its own private beach access and stunning views of the Arabian Gulf. The design emphasizes the connection between indoor and outdoor living spaces, with large glass facades that open onto private terraces and infinity pools.",
     slug: "seascape-villa",
+    gallery: [
+      "https://picsum.photos/seed/seascape-villa-1/800/600",
+      "https://picsum.photos/seed/seascape-villa-2/800/600",
+    ],
   },
   {
     id: 2,
@@ -358,10 +364,16 @@ export const projectData = [
     category: "Cultural",
     location: "Strasbourg, France",
     title: "European Lard Station",
-    image: "/img/home/e55f0243174379.57e5b1bdd7939-e1492696696110.jpg",
+    image: "https://picsum.photos/seed/european-station/800/600",
     excerpt:
       "Headquarters of the European Parliament including a 750-seat hemicycle...",
+    description:
+      "The European Parliament headquarters in Strasbourg represents a landmark architectural achievement that combines functionality with symbolic significance. The complex includes a 750-seat hemicycle for parliamentary sessions, extensive office spaces for MEPs and staff, and public areas designed to reflect the democratic values of the European Union. The building's design emphasizes transparency and accessibility, with glass facades that allow citizens to observe the democratic process.",
     slug: "european-lard-station",
+    gallery: [
+      "https://picsum.photos/seed/european-station-1/800/600",
+      "https://picsum.photos/seed/european-station-2/800/600",
+    ],
   },
   {
     id: 3,
@@ -369,10 +381,16 @@ export const projectData = [
     category: "Residental",
     location: "Paris, France",
     title: "Yabroudi Villa",
-    image: "/img/home/8a1f5243879223.jpg",
+    image: "https://picsum.photos/seed/yabroudi-villa/800/600",
     excerpt:
       "Calm, quiet areas designed for family life and reception areas...",
+    description:
+      "The Yabroudi Villa in Paris exemplifies modern residential architecture that prioritizes family living while maintaining elegant design principles. The villa features calm, quiet areas designed for family life and reception areas that can accommodate large gatherings. The design seamlessly integrates indoor and outdoor spaces, with a focus on natural light and sustainable materials. The villa's layout promotes both privacy and social interaction, creating a perfect balance for modern family living.",
     slug: "yabroudi-villa",
+    gallery: [
+      "https://picsum.photos/seed/yabroudi-villa-1/800/600",
+      "https://picsum.photos/seed/yabroudi-villa-2/800/600",
+    ],
   },
   {
     id: 4,
@@ -380,10 +398,16 @@ export const projectData = [
     category: "Cultural",
     location: "Muscat, Oman",
     title: "Cultural Complex Centre",
-    image: "/img/home/67162a45076555.58260565e42a0.jpg",
+    image: "https://picsum.photos/seed/cultural-complex/800/600",
     excerpt:
       "Cultural Centre emerges from a unique landscape between sea and mountains...",
+    description:
+      "The Cultural Complex Centre in Muscat emerges from a unique landscape between sea and mountains, creating a harmonious relationship with its natural surroundings. The complex includes performance spaces, exhibition halls, and educational facilities that celebrate Omani culture while providing modern amenities. The architecture draws inspiration from traditional Omani design elements while incorporating contemporary construction techniques and sustainable design principles.",
     slug: "cultural-complex-centre",
+    gallery: [
+      "https://picsum.photos/seed/cultural-complex-1/800/600",
+      "https://picsum.photos/seed/cultural-complex-2/800/600",
+    ],
   },
   {
     id: 5,
@@ -391,10 +415,16 @@ export const projectData = [
     category: "House",
     location: "Guangzhou, China",
     title: "Dalbourne Villa",
-    image: "/img/home/57c8b543253643.57e957e02ae33.jpg",
+    image: "https://picsum.photos/seed/dalbourne-villa/800/600",
     excerpt:
       "Located in the northern part of Guangzhou near Bai Yun mountain...",
+    description:
+      "Located in the northern part of Guangzhou near Bai Yun mountain, the Dalbourne Villa represents a fusion of modern architectural principles with traditional Chinese design philosophy. The villa's design emphasizes the connection between architecture and nature, with carefully planned views of the surrounding landscape and mountain vistas. The project demonstrates how contemporary residential architecture can respect and enhance its natural setting while providing luxurious living spaces.",
     slug: "dalbourne-villa",
+    gallery: [
+      "https://picsum.photos/seed/dalbourne-villa-1/800/600",
+      "https://picsum.photos/seed/dalbourne-villa-2/800/600",
+    ],
   },
   {
     id: 6,
@@ -402,9 +432,15 @@ export const projectData = [
     category: "Hotel",
     location: "Amman, Jordan",
     title: "Amman Rotana Hotel",
-    image: "/img/home/c5854644221919.580bb620ecb87.jpg",
+    image: "https://picsum.photos/seed/amman-hotel/800/600",
     excerpt: "54-room hotel with restaurants, spa, fitness centre and more...",
+    description:
+      "The Amman Rotana Hotel is a 54-room luxury hotel that combines contemporary design with traditional Jordanian hospitality. The hotel features multiple restaurants, a comprehensive spa, fitness centre, and conference facilities. The design emphasizes comfort and functionality while creating an atmosphere of luxury and sophistication. The hotel's architecture reflects the cultural heritage of Amman while providing modern amenities for international travelers.",
     slug: "amman-rotana-hotel",
+    gallery: [
+      "https://picsum.photos/seed/amman-hotel-1/800/600",
+      "https://picsum.photos/seed/amman-hotel-2/800/600",
+    ],
   },
 ];
 

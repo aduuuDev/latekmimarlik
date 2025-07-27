@@ -16,7 +16,7 @@ const Header = ({ theme = "light" }) => {
 
   // Get all services for dynamic menu
   const services = getAllServices();
-  
+
   // Get current language
   const { language } = useLanguage();
 
@@ -166,7 +166,10 @@ const Header = ({ theme = "light" }) => {
         </div>
 
         {/* LANGUAGE SWITCHER */}
-        <div className="prague-language-switcher" style={{ marginRight: "15px" }}>
+        <div
+          className="prague-language-switcher"
+          style={{ marginRight: "15px" }}
+        >
           <LanguageSwitcher mode="dropdown" />
         </div>
 
