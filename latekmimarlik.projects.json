@@ -1,0 +1,55 @@
+[
+  {
+    "_id": "68862b8bb9c99cd8ac85006c",
+    "id": "project1",
+    "title": "Modern Villa Projesi",
+    "slug": "modern-villa-projesi",
+    "category": "Konut",
+    "location": "İstanbul, Türkiye",
+    "year": "2024",
+    "area": "450 m²",
+    "client": "Özel Müşteri",
+    "description": "Modern çizgiler ve geniş cam yüzeylerle tasarlanmış lüks villa projesi...",
+    "images": [
+      "/img/projects/project1-1.jpg",
+      "/img/projects/project1-2.jpg",
+      "/img/projects/project1-3.jpg"
+    ],
+    "featured": true
+  },
+  {
+    "_id": "68862b8bb9c99cd8ac85006d",
+    "id": "project2",
+    "title": "Kurumsal Ofis Kompleksi",
+    "slug": "kurumsal-ofis-kompleksi",
+    "category": "Ticari",
+    "location": "Ankara, Türkiye",
+    "year": "2023",
+    "area": "3500 m²",
+    "client": "ABC Holding",
+    "description": "Sürdürülebilir ve modern bir yaklaşımla tasarlanmış kurumsal ofis binası...",
+    "images": [
+      "/img/projects/project2-1.jpg",
+      "/img/projects/project2-2.jpg"
+    ],
+    "featured": true
+  },
+  {
+    "_id": "68862b8bb9c99cd8ac85006e",
+    "id": "project3",
+    "title": "Şehir Meydanı Yenileme Projesi",
+    "slug": "sehir-meydani-yenileme-projesi",
+    "category": "Kentsel Tasarım",
+    "location": "İzmir, Türkiye",
+    "year": "2025",
+    "area": "12000 m²",
+    "client": "İzmir Belediyesi",
+    "description": "Tarihi dokuyu koruyarak modern ihtiyaçlara cevap veren şehir meydanı tasarımı...",
+    "images": [
+      "/img/projects/project3-1.jpg",
+      "/img/projects/project3-2.jpg",
+      "/img/projects/project3-3.jpg"
+    ],
+    "featured": false
+  }
+]

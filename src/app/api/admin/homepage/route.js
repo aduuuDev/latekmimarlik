@@ -165,13 +165,13 @@ export async function GET() {
             tr: "Latek Mimarlık - Anasayfa",
             en: "Latek Architecture - Homepage",
             de: "Latek Architektur - Startseite",
-            ar: "لاتك للعمارة - الصفحة الرئيسية"
+            ar: "لاتيك للهندسة المعمارية - الصفحة الرئيسية"
           },
           metaDescription: {
             tr: "Latek Mimarlık - Profesyonel mimari ve tasarım hizmetleri",
             en: "Latek Architecture - Professional architectural and design services",
             de: "Latek Architektur - Professionelle Architektur- und Designdienstleistungen",
-            ar: "لاتك للعمارة - خدمات معمارية وتصميم احترافية"
+            ar: "لاتيك للهندسة المعمارية - خدمات معمارية وتصميم احترافية"
           },
           keywords: {
             tr: "mimarlık, tasarım, iç mimari, dış mimari",

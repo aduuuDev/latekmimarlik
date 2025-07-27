@@ -1,0 +1,14 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "NextJS Ayarlar Sayfası Derlemesi",
+			"type": "shell",
+			"command": "cd /Volumes/YENI\\ BIRIM/Workfiles/latekmimarlik && npm run build",
+			"isBackground": false,
+			"problemMatcher": [
+				"$tsc"
+			]
+		}
+	]
+}

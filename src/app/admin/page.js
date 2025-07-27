@@ -2,13 +2,20 @@
 
 import { useSession, signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import styles from './page.module.css';
+import AdminLayout from '@/components/AdminLayout';
 
 export default function AdminPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
+
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+      setLoading(false);
+    }, []);
+  
 
   // Session kontrolü
   useEffect(() => {
@@ -17,13 +24,15 @@ export default function AdminPage() {
     }
   }, [status, router]);
 
-  // Yükleniyor durumu
-  if (status === 'loading') {
+   // Yükleniyor durumu
+  if (loading || status === 'loading') {
     return (
-      <div className={styles.loading}>
-        <div className={styles.spinner}></div>
-        <p>Yükleniyor...</p>
-      </div>
+      <AdminLayout>
+        <div className={styles.loading}>
+          <div className={styles.spinner}></div>
+          <p>Yükleniyor...</p>
+        </div>
+      </AdminLayout>
     );
   }
 
@@ -33,59 +42,12 @@ export default function AdminPage() {
   }
 
   return (
+    <AdminLayout>
     <div className={styles.adminContainer}>
-      <header className={styles.header}>
-        <div className={styles.logo}>
-          <Image src="/img/logo.png" alt="Latek Mimarlık" width={150} height={40} />
-        </div>
-        <div className={styles.userInfo}>
-          <span>Hoş geldiniz, {session.user.name}</span>
-          <button 
-            className={styles.logoutButton}
-            onClick={() => signOut({ callbackUrl: '/auth/login' })}
-          >
-            Çıkış Yap
-          </button>
-        </div>
-      </header>
+     
 
       <div className={styles.mainContent}>
-        <aside className={styles.sidebar}>
-          <nav>
-            <ul>
-              <li>
-                <a href="/admin" className={styles.active}>
-                  Dashboard
-                </a>
-              </li>
-              <li>
-                <a href="/admin/homepage">
-                  Anasayfa İçeriği
-                </a>
-              </li>
-              <li>
-                <a href="/admin/projects">
-                  Projeler
-                </a>
-              </li>
-              <li>
-                <a href="/admin/services">
-                  Hizmetler
-                </a>
-              </li>
-              <li>
-                <a href="/admin/blog">
-                  Blog
-                </a>
-              </li>
-              <li>
-                <a href="/admin/settings">
-                  Ayarlar
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </aside>
+    
 
         <main className={styles.content}>
           <h1>Dashboard</h1>
@@ -125,7 +87,7 @@ export default function AdminPage() {
           </div>
           
           <div className={styles.welcomeBox}>
-            <h2>Latek Mimarlık CMS&apos;e Hoş Geldiniz</h2>
+            <h2>CMS Yönetim Paneline Hoş Geldiniz</h2>
             <p>
               Bu panel üzerinden web sitenizin içeriklerini kolayca yönetebilirsiniz.
               Sol menüden ilgili bölüme giderek içerik ekleyebilir, düzenleyebilir veya silebilirsiniz.
@@ -137,5 +99,6 @@ export default function AdminPage() {
         </main>
       </div>
     </div>
+    </AdminLayout>
   );
 }

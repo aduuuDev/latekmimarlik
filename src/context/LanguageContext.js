@@ -23,34 +23,65 @@ export function LanguageProvider({ children }) {
   const [languages, setLanguages] = useState(defaultLanguages);
   const [loading, setLoading] = useState(true);
   
+  // Initial client-side check for stored language preference
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const storedLanguage = localStorage.getItem('preferredLanguage');
+        console.log('Initial localStorage check:', storedLanguage);
+        
+        if (storedLanguage) {
+          setLanguage(storedLanguage);
+        }
+      } catch (error) {
+        console.error('Error reading from localStorage:', error);
+      }
+    }
+  }, []);
+  
   // Fetch available languages from API
   useEffect(() => {
     // Set default language or use stored preference
     const setDefaultLanguage = (defaultCode, availableLanguages) => {
-      const storedLanguage = localStorage.getItem('preferredLanguage');
-      
-      if (storedLanguage && availableLanguages.some(lang => lang.code === storedLanguage)) {
-        setLanguage(storedLanguage);
-      } else {
-        // Try browser language
-        const browserLang = navigator.language?.split('-')[0];
-        if (browserLang && availableLanguages.some(lang => lang.code === browserLang)) {
-          setLanguage(browserLang);
-          localStorage.setItem('preferredLanguage', browserLang);
+      try {
+        const storedLanguage = localStorage.getItem('preferredLanguage');
+        console.log('Setting default language, stored preference:', storedLanguage);
+        
+        if (storedLanguage && availableLanguages.some(lang => lang.code === storedLanguage)) {
+          console.log('Using stored language preference:', storedLanguage);
+          setLanguage(storedLanguage);
         } else {
-          // Use default language from API or fallback
-          setLanguage(defaultCode || defaultLanguageCode);
-          localStorage.setItem('preferredLanguage', defaultCode || defaultLanguageCode);
+          // Try browser language
+          const browserLang = navigator.language?.split('-')[0];
+          if (browserLang && availableLanguages.some(lang => lang.code === browserLang)) {
+            console.log('Using browser language:', browserLang);
+            setLanguage(browserLang);
+            localStorage.setItem('preferredLanguage', browserLang);
+          } else {
+            // Use default language from API or fallback
+            console.log('Using default language:', defaultCode || defaultLanguageCode);
+            setLanguage(defaultCode || defaultLanguageCode);
+            localStorage.setItem('preferredLanguage', defaultCode || defaultLanguageCode);
+          }
         }
+      } catch (error) {
+        console.error('Error in setDefaultLanguage:', error);
+        setLanguage(defaultCode || defaultLanguageCode);
       }
     };
     
     const fetchLanguages = async () => {
       try {
-        const response = await fetch('/api/languages');
+        const response = await fetch('/api/languages', {
+          cache: 'no-store',
+          headers: {
+            'Cache-Control': 'no-cache'
+          }
+        });
         const data = await response.json();
         
         if (data.success && data.languages && data.languages.length > 0) {
+          console.log('Languages fetched from API:', data.languages);
           setLanguages(data.languages);
           
           // Find default language
@@ -74,28 +105,47 @@ export function LanguageProvider({ children }) {
   
   useEffect(() => {
     if (!loading && !languagesLoaded) {
-      const storedLanguage = localStorage.getItem('preferredLanguage');
-      
-      if (storedLanguage && languages.some(lang => lang.code === storedLanguage)) {
-        setLanguage(storedLanguage);
-      } else {
-        // Find default language
-        const defaultLang = languages.find(lang => lang.isDefault);
-        if (defaultLang) {
-          setLanguage(defaultLang.code);
-          localStorage.setItem('preferredLanguage', defaultLang.code);
+      try {
+        const storedLanguage = localStorage.getItem('preferredLanguage');
+        console.log('Languages loaded check, stored preference:', storedLanguage);
+        
+        if (storedLanguage && languages.some(lang => lang.code === storedLanguage)) {
+          console.log('Setting language from stored preference:', storedLanguage);
+          setLanguage(storedLanguage);
+        } else {
+          // Find default language
+          const defaultLang = languages.find(lang => lang.isDefault);
+          if (defaultLang) {
+            console.log('Setting default language from API:', defaultLang.code);
+            setLanguage(defaultLang.code);
+            localStorage.setItem('preferredLanguage', defaultLang.code);
+          }
         }
+      } catch (error) {
+        console.error('Error in language loading effect:', error);
+      } finally {
+        setLanguagesLoaded(true);
       }
-      
-      setLanguagesLoaded(true);
     }
   }, [loading, languages, languagesLoaded]);
   
   // Change language function
   const changeLanguage = (newLanguage) => {
     if (languages.some(lang => lang.code === newLanguage)) {
+      console.log('Changing language to:', newLanguage);
       setLanguage(newLanguage);
-      localStorage.setItem('preferredLanguage', newLanguage);
+      try {
+        localStorage.setItem('preferredLanguage', newLanguage);
+        console.log('Language saved to localStorage in changeLanguage:', newLanguage);
+        
+        // Debug: Verify immediately that the value was saved
+        const verifyValue = localStorage.getItem('preferredLanguage');
+        console.log('Verification - localStorage now contains:', verifyValue);
+      } catch (error) {
+        console.error('Error saving language to localStorage:', error);
+      }
+    } else {
+      console.warn('Attempted to set invalid language:', newLanguage);
     }
   };
   
@@ -146,3 +196,4 @@ export function getText(textObject, language, fallback = '') {
   // If absolutely nothing works, return the fallback
   return fallback;
 }
+

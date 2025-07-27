@@ -1,0 +1,360 @@
+[{
+  "_id": {
+    "$oid": "68862b560dda5c51e139ed01"
+  },
+  "title": {
+    "tr": "Planning",
+    "en": "Planning",
+    "de": "",
+    "ar": ""
+  },
+  "slug": "planning",
+  "description": {
+    "tr": "Our master plans provide a comprehensive look at where an organization is today.",
+    "en": "Our master plans provide a comprehensive look at where an organization is today.",
+    "de": "",
+    "ar": ""
+  },
+  "order": 1,
+  "isActive": true,
+  "detailContent": {
+    "description": {
+      "tr": "Our comprehensive planning services help organizations define their future direction and create actionable roadmaps for success.",
+      "en": "Our comprehensive planning services help organizations define their future direction and create actionable roadmaps for success.",
+      "de": "",
+      "ar": ""
+    },
+    "content": {
+      "tr": "\n        <p>Our master plans provide a comprehensive look at where an organization is today, where it wants to be in the future, and how it will get there. We work closely with our clients to understand their unique challenges and opportunities.</p>\n        \n        <h3>Our Planning Process</h3>\n        <ul>\n          <li>Initial consultation and needs assessment</li>\n          <li>Market research and competitive analysis</li>\n          <li>Strategic goal setting and timeline development</li>\n          <li>Resource allocation and budget planning</li>\n          <li>Implementation roadmap creation</li>\n          <li>Ongoing monitoring and adjustment</li>\n        </ul>\n        \n        <p>Whether you're planning a new construction project, renovating an existing space, or developing a long-term facilities strategy, our planning services ensure your project succeeds from concept to completion.</p>\n      ",
+      "en": "\n        <p>Our master plans provide a comprehensive look at where an organization is today, where it wants to be in the future, and how it will get there. We work closely with our clients to understand their unique challenges and opportunities.</p>\n        \n        <h3>Our Planning Process</h3>\n        <ul>\n          <li>Initial consultation and needs assessment</li>\n          <li>Market research and competitive analysis</li>\n          <li>Strategic goal setting and timeline development</li>\n          <li>Resource allocation and budget planning</li>\n          <li>Implementation roadmap creation</li>\n          <li>Ongoing monitoring and adjustment</li>\n        </ul>\n        \n        <p>Whether you're planning a new construction project, renovating an existing space, or developing a long-term facilities strategy, our planning services ensure your project succeeds from concept to completion.</p>\n      ",
+      "de": "",
+      "ar": ""
+    },
+    "featuredImage": "https://picsum.photos/seed/blog-modern-arch/600/400",
+    "gallery": []
+  },
+  "seo": {
+    "pageTitle": {
+      "tr": "Planning | Latek Mimarlık",
+      "en": "Planning | Latek Architecture",
+      "de": "",
+      "ar": ""
+    },
+    "metaDescription": {
+      "tr": "Our master plans provide a comprehensive look at where an organization is today.",
+      "en": "Our master plans provide a comprehensive look at where an organization is today.",
+      "de": "",
+      "ar": ""
+    },
+    "keywords": {
+      "tr": "Planning, mimarlık, tasarım, hizmet",
+      "en": "Planning, architecture, design, service",
+      "de": "",
+      "ar": ""
+    }
+  },
+  "updatedAt": {
+    "$date": "2025-07-27T13:36:22.813Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68862b560dda5c51e139ed02"
+  },
+  "title": {
+    "tr": "Interior",
+    "en": "Interior",
+    "de": "",
+    "ar": ""
+  },
+  "slug": "interior",
+  "description": {
+    "tr": "You may engage your architect to provide an interior design service, advising on loose furniture.",
+    "en": "You may engage your architect to provide an interior design service, advising on loose furniture.",
+    "de": "",
+    "ar": ""
+  },
+  "order": 2,
+  "isActive": true,
+  "detailContent": {
+    "description": {
+      "tr": "Transform your space with our comprehensive interior design services that blend functionality with aesthetic beauty.",
+      "en": "Transform your space with our comprehensive interior design services that blend functionality with aesthetic beauty.",
+      "de": "",
+      "ar": ""
+    },
+    "content": {
+      "tr": "\n        <p>You may engage your architect to provide an interior design service, advising on loose furniture, fixtures, and fittings. Our interior design team creates spaces that are not only beautiful but also functional and sustainable.</p>\n        \n        <h3>Interior Design Services</h3>\n        <ul>\n          <li>Space planning and layout optimization</li>\n          <li>Color scheme and material selection</li>\n          <li>Furniture and fixture specification</li>\n          <li>Lighting design and implementation</li>\n          <li>Custom millwork and built-in solutions</li>\n          <li>Project management and installation</li>\n        </ul>\n        \n        <p>From residential homes to commercial offices, our interior design approach focuses on creating environments that enhance the way people live and work while reflecting their personal style and brand identity.</p>\n      ",
+      "en": "\n        <p>You may engage your architect to provide an interior design service, advising on loose furniture, fixtures, and fittings. Our interior design team creates spaces that are not only beautiful but also functional and sustainable.</p>\n        \n        <h3>Interior Design Services</h3>\n        <ul>\n          <li>Space planning and layout optimization</li>\n          <li>Color scheme and material selection</li>\n          <li>Furniture and fixture specification</li>\n          <li>Lighting design and implementation</li>\n          <li>Custom millwork and built-in solutions</li>\n          <li>Project management and installation</li>\n        </ul>\n        \n        <p>From residential homes to commercial offices, our interior design approach focuses on creating environments that enhance the way people live and work while reflecting their personal style and brand identity.</p>\n      ",
+      "de": "",
+      "ar": ""
+    },
+    "featuredImage": "/img/services/interior-detail.jpg",
+    "gallery": []
+  },
+  "seo": {
+    "pageTitle": {
+      "tr": "Interior | Latek Mimarlık",
+      "en": "Interior | Latek Architecture",
+      "de": "",
+      "ar": ""
+    },
+    "metaDescription": {
+      "tr": "You may engage your architect to provide an interior design service, advising on loose furniture.",
+      "en": "You may engage your architect to provide an interior design service, advising on loose furniture.",
+      "de": "",
+      "ar": ""
+    },
+    "keywords": {
+      "tr": "Interior, mimarlık, tasarım, hizmet",
+      "en": "Interior, architecture, design, service",
+      "de": "",
+      "ar": ""
+    }
+  },
+  "updatedAt": {
+    "$date": "2025-07-27T13:36:22.814Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68862b560dda5c51e139ed03"
+  },
+  "title": {
+    "tr": "Exterior",
+    "en": "Exterior",
+    "de": "",
+    "ar": ""
+  },
+  "slug": "exterior",
+  "description": {
+    "tr": "Working together with your architect, you will share your project needs, dreams and goals.",
+    "en": "Working together with your architect, you will share your project needs, dreams and goals.",
+    "de": "",
+    "ar": ""
+  },
+  "order": 3,
+  "isActive": true,
+  "detailContent": {
+    "description": {
+      "tr": "Create stunning exterior spaces that make a lasting impression while providing functional outdoor environments.",
+      "en": "Create stunning exterior spaces that make a lasting impression while providing functional outdoor environments.",
+      "de": "",
+      "ar": ""
+    },
+    "content": {
+      "tr": "\n        <p>Working together with your architect, you will share your project needs, dreams and goals. Our exterior design services encompass everything from building facades to landscape architecture, creating cohesive outdoor environments.</p>\n        \n        <h3>Exterior Design Expertise</h3>\n        <ul>\n          <li>Architectural facade design</li>\n          <li>Landscape architecture and planning</li>\n          <li>Outdoor living space creation</li>\n          <li>Material selection and weatherproofing</li>\n          <li>Sustainable design solutions</li>\n          <li>Code compliance and permitting</li>\n        </ul>\n        \n        <p>Our exterior design philosophy emphasizes the relationship between buildings and their surrounding environment, creating spaces that are both visually striking and environmentally responsible.</p>\n      ",
+      "en": "\n        <p>Working together with your architect, you will share your project needs, dreams and goals. Our exterior design services encompass everything from building facades to landscape architecture, creating cohesive outdoor environments.</p>\n        \n        <h3>Exterior Design Expertise</h3>\n        <ul>\n          <li>Architectural facade design</li>\n          <li>Landscape architecture and planning</li>\n          <li>Outdoor living space creation</li>\n          <li>Material selection and weatherproofing</li>\n          <li>Sustainable design solutions</li>\n          <li>Code compliance and permitting</li>\n        </ul>\n        \n        <p>Our exterior design philosophy emphasizes the relationship between buildings and their surrounding environment, creating spaces that are both visually striking and environmentally responsible.</p>\n      ",
+      "de": "",
+      "ar": ""
+    },
+    "featuredImage": "/img/services/exterior-detail.jpg",
+    "gallery": []
+  },
+  "seo": {
+    "pageTitle": {
+      "tr": "Exterior | Latek Mimarlık",
+      "en": "Exterior | Latek Architecture",
+      "de": "",
+      "ar": ""
+    },
+    "metaDescription": {
+      "tr": "Working together with your architect, you will share your project needs, dreams and goals.",
+      "en": "Working together with your architect, you will share your project needs, dreams and goals.",
+      "de": "",
+      "ar": ""
+    },
+    "keywords": {
+      "tr": "Exterior, mimarlık, tasarım, hizmet",
+      "en": "Exterior, architecture, design, service",
+      "de": "",
+      "ar": ""
+    }
+  },
+  "updatedAt": {
+    "$date": "2025-07-27T13:36:22.814Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68862b560dda5c51e139ed04"
+  },
+  "title": {
+    "tr": "Sustainability",
+    "en": "Sustainability",
+    "de": "",
+    "ar": ""
+  },
+  "slug": "sustainability",
+  "description": {
+    "tr": "We help organizations develop sustainable solutions that reduce environmental impact.",
+    "en": "We help organizations develop sustainable solutions that reduce environmental impact.",
+    "de": "",
+    "ar": ""
+  },
+  "order": 4,
+  "isActive": true,
+  "detailContent": {
+    "description": {
+      "tr": "Our sustainability experts guide your projects to meet eco-friendly standards while optimizing performance and cost.",
+      "en": "Our sustainability experts guide your projects to meet eco-friendly standards while optimizing performance and cost.",
+      "de": "",
+      "ar": ""
+    },
+    "content": {
+      "tr": "\n        <p>We help organizations develop sustainable solutions that reduce environmental impact and meet evolving regulatory requirements. Our approach integrates green strategies from the earliest design stages.</p>\n        \n        <h3>Sustainability Services</h3>\n        <ul>\n          <li>Green building certification (LEED, BREEAM, etc.)</li>\n          <li>Energy efficiency and renewable integration</li>\n          <li>Water conservation and reuse systems</li>\n          <li>Eco-friendly materials selection</li>\n          <li>Carbon footprint analysis</li>\n          <li>Lifecycle cost analysis</li>\n        </ul>\n        \n        <p>Our designs focus on creating buildings and spaces that minimize environmental impact, lower operational costs, and enhance occupant well-being.</p>\n      ",
+      "en": "\n        <p>We help organizations develop sustainable solutions that reduce environmental impact and meet evolving regulatory requirements. Our approach integrates green strategies from the earliest design stages.</p>\n        \n        <h3>Sustainability Services</h3>\n        <ul>\n          <li>Green building certification (LEED, BREEAM, etc.)</li>\n          <li>Energy efficiency and renewable integration</li>\n          <li>Water conservation and reuse systems</li>\n          <li>Eco-friendly materials selection</li>\n          <li>Carbon footprint analysis</li>\n          <li>Lifecycle cost analysis</li>\n        </ul>\n        \n        <p>Our designs focus on creating buildings and spaces that minimize environmental impact, lower operational costs, and enhance occupant well-being.</p>\n      ",
+      "de": "",
+      "ar": ""
+    },
+    "featuredImage": "/img/services/sustainability-detail.jpg",
+    "gallery": []
+  },
+  "seo": {
+    "pageTitle": {
+      "tr": "Sustainability | Latek Mimarlık",
+      "en": "Sustainability | Latek Architecture",
+      "de": "",
+      "ar": ""
+    },
+    "metaDescription": {
+      "tr": "We help organizations develop sustainable solutions that reduce environmental impact.",
+      "en": "We help organizations develop sustainable solutions that reduce environmental impact.",
+      "de": "",
+      "ar": ""
+    },
+    "keywords": {
+      "tr": "Sustainability, mimarlık, tasarım, hizmet",
+      "en": "Sustainability, architecture, design, service",
+      "de": "",
+      "ar": ""
+    }
+  },
+  "updatedAt": {
+    "$date": "2025-07-27T13:36:22.815Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68862b560dda5c51e139ed05"
+  },
+  "title": {
+    "tr": "Project Management",
+    "en": "Project Management",
+    "de": "",
+    "ar": ""
+  },
+  "slug": "project-management",
+  "description": {
+    "tr": "We ensure your project is delivered on time, within scope, and on budget through expert project management.",
+    "en": "We ensure your project is delivered on time, within scope, and on budget through expert project management.",
+    "de": "",
+    "ar": ""
+  },
+  "order": 5,
+  "isActive": true,
+  "detailContent": {
+    "description": {
+      "tr": "From concept to completion, we coordinate all phases of your project, ensuring seamless communication and efficient execution.",
+      "en": "From concept to completion, we coordinate all phases of your project, ensuring seamless communication and efficient execution.",
+      "de": "",
+      "ar": ""
+    },
+    "content": {
+      "tr": "\n        <p>We offer complete project management services that align every stakeholder and activity toward a successful outcome. Our experienced team monitors timelines, budgets, and quality to ensure smooth delivery.</p>\n        \n        <h3>Project Management Scope</h3>\n        <ul>\n          <li>Schedule development and tracking</li>\n          <li>Budget control and financial reporting</li>\n          <li>Risk management and mitigation</li>\n          <li>Vendor coordination and contract oversight</li>\n          <li>Quality control and inspection</li>\n          <li>Stakeholder communication</li>\n        </ul>\n        \n        <p>Our commitment is to take the stress out of your project, so you can focus on the big picture while we manage the day-to-day details.</p>\n      ",
+      "en": "\n        <p>We offer complete project management services that align every stakeholder and activity toward a successful outcome. Our experienced team monitors timelines, budgets, and quality to ensure smooth delivery.</p>\n        \n        <h3>Project Management Scope</h3>\n        <ul>\n          <li>Schedule development and tracking</li>\n          <li>Budget control and financial reporting</li>\n          <li>Risk management and mitigation</li>\n          <li>Vendor coordination and contract oversight</li>\n          <li>Quality control and inspection</li>\n          <li>Stakeholder communication</li>\n        </ul>\n        \n        <p>Our commitment is to take the stress out of your project, so you can focus on the big picture while we manage the day-to-day details.</p>\n      ",
+      "de": "",
+      "ar": ""
+    },
+    "featuredImage": "/img/services/project-management-detail.jpg",
+    "gallery": []
+  },
+  "seo": {
+    "pageTitle": {
+      "tr": "Project Management | Latek Mimarlık",
+      "en": "Project Management | Latek Architecture",
+      "de": "",
+      "ar": ""
+    },
+    "metaDescription": {
+      "tr": "We ensure your project is delivered on time, within scope, and on budget through expert project management.",
+      "en": "We ensure your project is delivered on time, within scope, and on budget through expert project management.",
+      "de": "",
+      "ar": ""
+    },
+    "keywords": {
+      "tr": "Project Management, mimarlık, tasarım, hizmet",
+      "en": "Project Management, architecture, design, service",
+      "de": "",
+      "ar": ""
+    }
+  },
+  "updatedAt": {
+    "$date": "2025-07-27T13:36:22.815Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68862b560dda5c51e139ed06"
+  },
+  "title": {
+    "tr": "Consulting",
+    "en": "Consulting",
+    "de": "",
+    "ar": ""
+  },
+  "slug": "consulting",
+  "description": {
+    "tr": "Gain expert insight into your design or construction process with our consulting services.",
+    "en": "Gain expert insight into your design or construction process with our consulting services.",
+    "de": "",
+    "ar": ""
+  },
+  "order": 6,
+  "isActive": true,
+  "detailContent": {
+    "description": {
+      "tr": "Our consulting services help clients make informed decisions, mitigate risks, and optimize design outcomes.",
+      "en": "Our consulting services help clients make informed decisions, mitigate risks, and optimize design outcomes.",
+      "de": "",
+      "ar": ""
+    },
+    "content": {
+      "tr": "\n        <p>Whether you're exploring a new venture or troubleshooting an ongoing project, our consultants provide critical analysis and creative problem-solving to support your goals.</p>\n        \n        <h3>Consulting Expertise</h3>\n        <ul>\n          <li>Feasibility studies and site evaluations</li>\n          <li>Design critique and value engineering</li>\n          <li>Building code and zoning review</li>\n          <li>Construction document assessment</li>\n          <li>Procurement strategy guidance</li>\n          <li>Owner representation and advisory</li>\n        </ul>\n        \n        <p>We bring a fresh perspective, backed by years of industry experience, to help you achieve clarity and confidence in every decision.</p>\n      ",
+      "en": "\n        <p>Whether you're exploring a new venture or troubleshooting an ongoing project, our consultants provide critical analysis and creative problem-solving to support your goals.</p>\n        \n        <h3>Consulting Expertise</h3>\n        <ul>\n          <li>Feasibility studies and site evaluations</li>\n          <li>Design critique and value engineering</li>\n          <li>Building code and zoning review</li>\n          <li>Construction document assessment</li>\n          <li>Procurement strategy guidance</li>\n          <li>Owner representation and advisory</li>\n        </ul>\n        \n        <p>We bring a fresh perspective, backed by years of industry experience, to help you achieve clarity and confidence in every decision.</p>\n      ",
+      "de": "",
+      "ar": ""
+    },
+    "featuredImage": "/img/services/consulting-detail.jpg",
+    "gallery": []
+  },
+  "seo": {
+    "pageTitle": {
+      "tr": "Consulting | Latek Mimarlık",
+      "en": "Consulting | Latek Architecture",
+      "de": "",
+      "ar": ""
+    },
+    "metaDescription": {
+      "tr": "Gain expert insight into your design or construction process with our consulting services.",
+      "en": "Gain expert insight into your design or construction process with our consulting services.",
+      "de": "",
+      "ar": ""
+    },
+    "keywords": {
+      "tr": "Consulting, mimarlık, tasarım, hizmet",
+      "en": "Consulting, architecture, design, service",
+      "de": "",
+      "ar": ""
+    }
+  },
+  "updatedAt": {
+    "$date": "2025-07-27T13:36:22.815Z"
+  },
+  "__v": 0
+}]
