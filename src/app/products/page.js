@@ -6,8 +6,11 @@ import AutoBreadcrumb from "@/components/AutoBreadcrumb";
 import Pagination from "@/components/Pagination";
 import { getAllProducts, generateSlug } from "../../utils/mockData";
 import Link from "next/link";
+import { useHeaderNavigation } from "../../hooks/useHeaderNavigation";
 
 export default function Products() {
+  const { getNavigationTextUpperCase, loading: navLoading } =
+    useHeaderNavigation();
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 8;
   const allProducts = getAllProducts();
@@ -50,7 +53,9 @@ export default function Products() {
                       textAlign: "left",
                     }}
                   >
-                    PRODUCTS
+                    {navLoading
+                      ? "PRODUCTS"
+                      : getNavigationTextUpperCase("products", "PRODUCTS")}
                   </div>
                   <AutoBreadcrumb textColor="black" justifyContent="left" />
                 </div>

@@ -6,8 +6,11 @@ import AutoBreadcrumb from "@/components/AutoBreadcrumb";
 import Pagination from "@/components/Pagination";
 import { getAllProjects, generateSlug } from "@/utils/mockData";
 import Link from "next/link";
+import { useHeaderNavigation } from "../../hooks/useHeaderNavigation";
 
 export default function Projects() {
+  const { getNavigationTextUpperCase, loading: navLoading } =
+    useHeaderNavigation();
   const [activeFilters, setActiveFilters] = useState({
     year: "",
     location: "",
@@ -138,7 +141,9 @@ export default function Projects() {
                       textAlign: "left",
                     }}
                   >
-                    PROJECTS
+                    {navLoading
+                      ? "PROJECTS"
+                      : getNavigationTextUpperCase("projects", "PROJECTS")}
                   </div>
                   <AutoBreadcrumb textColor="black" justifyContent="left" />
                 </div>

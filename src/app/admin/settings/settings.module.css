@@ -561,18 +561,32 @@
 .headerMenuPreview {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 12px;
   flex: 2;
+  flex-wrap: wrap;
 }
 
 .menuItem {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
+  white-space: nowrap;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: rgba(59, 130, 246, 0.1);
+  color: #374151;
+  transition: all 0.2s ease;
+}
+
+.menuItem:hover {
+  background: rgba(59, 130, 246, 0.2);
 }
 
 .menuIcon {
   font-size: 16px;
   margin-left: 5px;
+  padding: 4px;
+  border-radius: 4px;
+  background: rgba(34, 197, 94, 0.1);
 }
 
 /* Görsel geliştirmeler */
@@ -646,6 +660,63 @@
   transform: scaleX(1);
 }
 
+/* Navigation Grid */
+.navigationGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.navigationGrid .formGroup {
+  margin-bottom: 0;
+}
+
+.navigationGrid label {
+  font-weight: 600;
+  color: #374151;
+  font-size: 14px;
+}
+
+.navigationGrid input {
+  margin-top: 6px;
+  padding: 10px 12px;
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.navigationGrid input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Reset Button */
+.resetButton {
+  background: linear-gradient(135deg, #f59e0b, #f97316);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 8px;
+}
+
+.resetButton:hover {
+  background: linear-gradient(135deg, #f97316, #ea580c);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(251, 146, 60, 0.4);
+}
+
+.resetButton:active {
+  transform: translateY(0);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .tabButton {
@@ -668,5 +739,21 @@
   
   .buttonGroup {
     padding: 15px;
+  }
+  
+  .navigationGrid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .headerMenuPreview {
+    gap: 8px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .menuItem {
+    font-size: 12px;
+    padding: 3px 6px;
   }
 }

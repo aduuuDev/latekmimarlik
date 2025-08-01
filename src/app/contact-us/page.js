@@ -5,8 +5,11 @@ import MainLayout from "../../layouts/MainLayout";
 import GoogleMapComponent from "@/components/GoogleMap";
 import Image from "next/image";
 import AutoBreadcrumb from "@/components/AutoBreadcrumb";
+import { useHeaderNavigation } from "../../hooks/useHeaderNavigation";
 
 export default function ContactUs() {
+  const { getNavigationTextUpperCase, loading: navLoading } =
+    useHeaderNavigation();
   const locations = [
     {
       title: "EVO GRAND HALL",
@@ -53,7 +56,9 @@ export default function ContactUs() {
                       textAlign: "left",
                     }}
                   >
-                    CONTACT US
+                    {navLoading
+                      ? "CONTACT US"
+                      : getNavigationTextUpperCase("contact", "CONTACT US")}
                   </div>
                   <AutoBreadcrumb textColor="black" justifyContent="left" />
                 </div>

@@ -7,9 +7,11 @@ import Link from "next/link";
 import AutoBreadcrumb from "@/components/AutoBreadcrumb";
 import { getAllTeamMembers } from "../../utils/mockData";
 import VideoPlayer from "@/components/VideoPlayer";
+import { useHeaderNavigation } from "../../hooks/useHeaderNavigation";
 
 const AboutUsPage = () => {
   const teamMembers = getAllTeamMembers();
+  const { getNavigationTextUpperCase, loading } = useHeaderNavigation();
 
   return (
     <MainLayout headerTheme="dark">
@@ -37,7 +39,9 @@ const AboutUsPage = () => {
                       textAlign: "left",
                     }}
                   >
-                    ABOUT US
+                    {loading
+                      ? "ABOUT US"
+                      : getNavigationTextUpperCase("about", "ABOUT US")}
                   </div>
                   <AutoBreadcrumb textColor="black" justifyContent="left" />
                 </div>
@@ -172,7 +176,10 @@ const AboutUsPage = () => {
       </div>
 
       <div className="container no-padd margin-lg-60b">
-        <div className="row-fluid margin-lg-35t margin-sm-20t">
+        <div
+          className="row-fluid margin-lg-35t margin-sm-20t"
+          style={{ display: "flex" }}
+        >
           {teamMembers.map((member, index) => (
             <div
               key={member.id}

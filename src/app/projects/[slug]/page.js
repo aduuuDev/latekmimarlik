@@ -10,9 +10,15 @@ import {
   generateSlug,
 } from "../../../utils/mockData";
 import AutoBreadcrumb from "@/components/AutoBreadcrumb";
+import { useHeaderNavigation } from "../../../hooks/useHeaderNavigation";
 
 const ProjectDetailPage = () => {
   const params = useParams();
+  const {
+    getNavigationTextUpperCase,
+    getNavigationText,
+    loading: navLoading,
+  } = useHeaderNavigation();
   const project = getProjectBySlug(params.slug);
   const allProjects = getAllProjects();
 
@@ -64,7 +70,9 @@ const ProjectDetailPage = () => {
                       textAlign: "left",
                     }}
                   >
-                    PROJECTS
+                    {navLoading
+                      ? "PROJECTS"
+                      : getNavigationTextUpperCase("projects", "PROJECTS")}
                   </div>
                   <AutoBreadcrumb
                     textColor="black"
@@ -72,7 +80,9 @@ const ProjectDetailPage = () => {
                     customBreadcrumbs={[
                       {
                         href: "/projects",
-                        label: "Projects",
+                        label: navLoading
+                          ? "Projects"
+                          : getNavigationText("projects", "Projects"),
                       },
                       {
                         href: `/projects/${params.slug}`,

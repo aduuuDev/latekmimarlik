@@ -12,10 +12,16 @@ import {
 } from "../../../utils/mockData";
 import AutoBreadcrumb from "@/components/AutoBreadcrumb";
 import { useLanguage, getText } from "@/context/LanguageContext";
+import { useHeaderNavigation } from "../../../hooks/useHeaderNavigation";
 
 const ServiceDetailPage = () => {
   const params = useParams();
   const { language } = useLanguage();
+  const {
+    getNavigationTextUpperCase,
+    getNavigationText,
+    loading: navLoading,
+  } = useHeaderNavigation();
   const [service, setService] = useState(null);
   const [relatedServices, setRelatedServices] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -172,15 +178,9 @@ const ServiceDetailPage = () => {
                       textAlign: "left",
                     }}
                   >
-                    {getText(
-                      {
-                        tr: "HİZMETLERİMİZ",
-                        en: "OUR SERVICES",
-                        de: "UNSERE DIENSTLEISTUNGEN",
-                        ar: "خدماتنا",
-                      },
-                      language
-                    )}
+                    {navLoading
+                      ? "OUR SERVICES"
+                      : getNavigationTextUpperCase("services", "OUR SERVICES")}
                   </div>
                   <AutoBreadcrumb
                     textColor="black"
@@ -188,15 +188,9 @@ const ServiceDetailPage = () => {
                     customBreadcrumbs={[
                       {
                         href: "/services",
-                        label: getText(
-                          {
-                            tr: "Hizmetler",
-                            en: "Services",
-                            de: "Dienstleistungen",
-                            ar: "الخدمات",
-                          },
-                          language
-                        ),
+                        label: navLoading
+                          ? "Services"
+                          : getNavigationText("services", "Services"),
                       },
                       {
                         href: `/services/${params.slug}`,
@@ -262,10 +256,11 @@ const ServiceDetailPage = () => {
                   }}
                 />
               )}
-              Gallery Images
+
               {service.detailContent?.gallery &&
                 service.detailContent.gallery.length > 0 && (
                   <div className="service-gallery margin-lg-30t margin-lg-30b">
+                    Gallery Images
                     <h3 style={{ marginBottom: "20px" }}>
                       {getText(
                         {

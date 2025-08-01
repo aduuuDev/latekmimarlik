@@ -17,10 +17,11 @@ import {
 import { useLanguage, getText } from "../context/LanguageContext";
 
 const HomePage = () => {
-  const services = getRecentServices(3);
   const recentBlogs = getRecentBlogs(4);
   const [homepageData, setHomepageData] = useState(null);
+  const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [servicesLoading, setServicesLoading] = useState(true);
   const { language } = useLanguage();
 
   useEffect(() => {
@@ -44,6 +45,34 @@ const HomePage = () => {
 
     fetchHomepageData();
   }, []);
+
+  // Services'leri API'den çek
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        setServicesLoading(true);
+        const response = await fetch("/api/services");
+        const result = await response.json();
+
+        if (result.success && result.data) {
+          // Ana sayfada sadece ilk 3 servisi göster
+          setServices(result.data.slice(0, 3));
+        } else {
+          console.error("Services alınamadı:", result);
+          // Fallback to mockData if API fails
+          setServices(getRecentServices(3));
+        }
+      } catch (error) {
+        console.error("Services çekilirken hata:", error);
+        // Fallback to mockData
+        setServices(getRecentServices(3));
+      } finally {
+        setServicesLoading(false);
+      }
+    };
+
+    fetchServices();
+  }, [language]); // Dil değiştiğinde yeniden çek
   return (
     <MainLayout>
       {homepageData?.seo && <SeoHead seoData={homepageData.seo} />}
@@ -233,21 +262,60 @@ const HomePage = () => {
                 </div>
 
                 <div className="js-load-more">
-                  <div className="row prague_services prague_count_col3 prague_gap_col15">
-                    {services.map((service, index) => (
-                      <ServiceCard
-                        key={service.id}
-                        service={service}
-                        className={
-                          index === 1
-                            ? "p_f_f9e81a7 column_paralax"
-                            : index === 2
-                            ? "p_f_f9e81a7"
-                            : ""
-                        }
-                      />
-                    ))}
-                  </div>
+                  {servicesLoading ? (
+                    <div style={{ textAlign: "center", padding: "40px 0" }}>
+                      <div
+                        style={{
+                          width: "40px",
+                          height: "40px",
+                          border: "4px solid rgba(0,0,0,0.1)",
+                          borderRadius: "50%",
+                          borderTopColor: "#1976d2",
+                          animation: "spin 1s ease-in-out infinite",
+                          margin: "0 auto 15px",
+                        }}
+                      ></div>
+                      <p>Loading services...</p>
+                    </div>
+                  ) : services.length === 0 ? (
+                    <div style={{ textAlign: "center", padding: "40px 0" }}>
+                      <p>
+                        {getText(
+                          {
+                            tr: "Henüz hizmet bulunmuyor.",
+                            en: "No services found.",
+                            de: "Keine Dienstleistungen gefunden.",
+                            ar: "لم يتم العثور على خدمات.",
+                          },
+                          language
+                        )}
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="row prague_services prague_count_col3 prague_gap_col15">
+                      {services.map((service, index) => (
+                        <ServiceCard
+                          key={service._id || service.id}
+                          service={{
+                            ...service,
+                            title: getText(service.title, language, "Service"),
+                            description: getText(
+                              service.description,
+                              language,
+                              ""
+                            ),
+                          }}
+                          className={
+                            index === 1
+                              ? "p_f_f9e81a7 column_paralax"
+                              : index === 2
+                              ? "p_f_f9e81a7"
+                              : ""
+                          }
+                        />
+                      ))}
+                    </div>
+                  )}
                 </div>
                 <div className="row">
                   <div className="col-sm-12 text-center">

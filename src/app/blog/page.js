@@ -6,8 +6,11 @@ import MainLayout from "../../layouts/MainLayout";
 import Pagination from "@/components/Pagination";
 import { getAllBlogs, generateSlug } from "../../utils/mockData";
 import AutoBreadcrumb from "@/components/AutoBreadcrumb";
+import { useHeaderNavigation } from "../../hooks/useHeaderNavigation";
 
 export default function Blog() {
+  const { getNavigationTextUpperCase, loading: navLoading } =
+    useHeaderNavigation();
   const [currentPage, setCurrentPage] = useState(1);
   const blogPostsPerPage = 4;
 
@@ -52,7 +55,9 @@ export default function Blog() {
                       textAlign: "left",
                     }}
                   >
-                    BLOG
+                    {navLoading
+                      ? "BLOG"
+                      : getNavigationTextUpperCase("blog", "BLOG")}
                   </div>
                   <AutoBreadcrumb textColor="black" justifyContent="left" />
                 </div>

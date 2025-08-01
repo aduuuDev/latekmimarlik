@@ -6,20 +6,78 @@ import Image from "next/image";
 import { useHamburgerMenu } from "../hooks/useHamburgerMenu";
 import { getAllServices, generateSlug } from "../utils/mockData";
 import LanguageSwitcher from "./LanguageSwitcher";
-import { useLanguage } from "../context/LanguageContext";
+import { useLanguage, getText } from "../context/LanguageContext";
 
 const Header = ({ theme = "light" }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [showSocial, setShowSocial] = useState(false);
+  const [headerSettings, setHeaderSettings] = useState(null);
 
   // Global hamburger menu hook'u kullan
   const { isMenuOpen, toggleMenu, closeMenu } = useHamburgerMenu();
 
-  // Get all services for dynamic menu
-  const services = getAllServices();
-
   // Get current language
   const { language, changeLanguage, languages } = useLanguage();
+
+  // Get all services for dynamic menu
+  const [services, setServices] = useState([]);
+  const [servicesLoading, setServicesLoading] = useState(true);
+
+  // Servisleri API'den çek
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        setServicesLoading(true);
+        const response = await fetch("/api/services");
+        const result = await response.json();
+
+        if (result.success && result.data) {
+          setServices(result.data);
+        } else {
+          // Fallback to mockData if API fails
+          setServices(getAllServices());
+        }
+      } catch (error) {
+        console.error("Services çekilirken hata:", error);
+        // Fallback to mockData
+        setServices(getAllServices());
+      } finally {
+        setServicesLoading(false);
+      }
+    };
+
+    fetchServices();
+  }, [language]); // Dil değiştiğinde servisleri yeniden çek
+
+  // Header ayarlarını çek
+  useEffect(() => {
+    const fetchHeaderSettings = async () => {
+      try {
+        const response = await fetch("/api/admin/settings?type=header");
+        const result = await response.json();
+
+        if (result.success && result.data) {
+          setHeaderSettings(result.data);
+        }
+      } catch (error) {
+        console.error("Header ayarları çekilirken hata:", error);
+      }
+    };
+
+    fetchHeaderSettings();
+  }, []);
+
+  // getText fonksiyonu (fallback için)
+  const getText = (textObj, currentLang, fallback) => {
+    if (!textObj || typeof textObj !== "object") return fallback;
+    return textObj[currentLang] || textObj["tr"] || textObj["en"] || fallback;
+  };
+
+  // Navigation metinlerini al (language değiştiğinde yeniden hesaplanır)
+  const getNavigationText = (key, fallback) => {
+    if (!headerSettings?.navigation) return fallback;
+    return getText(headerSettings.navigation[key], language, fallback);
+  };
 
   // Scroll davranışı için useEffect
   useEffect(() => {
@@ -117,49 +175,71 @@ const Header = ({ theme = "light" }) => {
                 <ul className={`main-menu ${isMenuOpen ? "active" : ""}`}>
                   <li className="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children">
                     <Link href="/" onClick={closeMenu}>
-                      Anasayfa
+                      {getNavigationText("home", "Anasayfa")}
                     </Link>
                   </li>
                   <li className="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children">
                     <Link href="/about-us" onClick={closeMenu}>
-                      Hakkımızda
+                      {getNavigationText("about", "Hakkımızda")}
                     </Link>
                   </li>
                   <li className="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children">
                     <Link href="/services" onClick={closeMenu}>
-                      Hizmetlerimiz
+                      {getNavigationText("services", "Hizmetlerimiz")}
                     </Link>
                     <ul className="sub-menu">
-                      {services.map((service) => (
-                        <li key={service.id}>
-                          <Link
-                            href={`/services/${generateSlug(service.title)}`}
-                            onClick={closeMenu}
-                          >
-                            {service.title}
-                          </Link>
+                      {servicesLoading ? (
+                        <li>
+                          <span style={{ padding: "10px 20px", color: "#666" }}>
+                            Loading...
+                          </span>
                         </li>
-                      ))}
+                      ) : services.length > 0 ? (
+                        services.map((service) => (
+                          <li key={service.id || service._id}>
+                            <Link
+                              href={`/services/${
+                                service.slug || generateSlug(service.title)
+                              }`}
+                              onClick={closeMenu}
+                            >
+                              {getText(
+                                service.title,
+                                language,
+                                service.title?.tr ||
+                                  service.title?.en ||
+                                  "Service"
+                              )}
+                            </Link>
+                          </li>
+                        ))
+                      ) : (
+                        <li>
+                          <span style={{ padding: "10px 20px", color: "#666" }}>
+                            No services available
+                          </span>
+                        </li>
+                      )}
                     </ul>
                   </li>
                   <li className="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children">
                     <Link href="/projects" onClick={closeMenu}>
-                      Projelerimiz
+                      {getNavigationText("projects", "Projelerimiz")}
                     </Link>
                   </li>
                   <li className="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children">
                     <Link href="/products" onClick={closeMenu}>
-                      Ürünlerimiz
+                      {getNavigationText("products", "Ürünlerimiz")}
                     </Link>
                   </li>
                   <li className="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children">
                     <Link href="/blog" onClick={closeMenu}>
-                      Blog
+                      {getNavigationText("blog", "Blog")}
                     </Link>
                   </li>
                   <li className="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children">
                     <Link href="/contact-us" onClick={closeMenu}>
-                      İletişim
+                      {getNavigationText("contact", "İletişim")}
                     </Link>
                   </li>
                 </ul>
@@ -182,16 +262,9 @@ const Header = ({ theme = "light" }) => {
         </div>
 
         {/* LANGUAGE SWITCHER */}
-        <div
-          className="prague-language-switcher"
-          style={{ marginRight: "15px" }}
-        >
-          <LanguageSwitcher mode="dropdown" />
-        </div>
-
-        {/* LANGUAGE SWITCHER */}
         <div className="prague-social-nav">
           <a
+            className="language-icon"
             href="#"
             onClick={(e) => {
               e.preventDefault();
@@ -221,7 +294,7 @@ const Header = ({ theme = "light" }) => {
                     }}
                     className={lang.code === language ? "active" : ""}
                   >
-                    <span>{lang.nativeName || lang.name}</span>
+                    <span>{lang.code || lang.name}</span>
                   </a>
                 </li>
               ))}
