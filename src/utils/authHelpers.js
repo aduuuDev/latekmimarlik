@@ -3,14 +3,16 @@ import { getServerSession } from "next-auth/next";
 // Auth options'ı dinamik olarak import et
 export async function getAuthOptions() {
   try {
-    // Build zamanında auth import etme
-    if (typeof window === 'undefined' && process.env.NODE_ENV === 'production') {
+    // Build zamanında veya production'da MONGODB_URI yoksa null döndür
+    if (typeof window === 'undefined' &&
+        (process.env.NODE_ENV === 'production' && !process.env.MONGODB_URI)) {
       return null;
     }
+
     const { authOptions } = await import("../app/api/auth/[...nextauth]/route");
     return authOptions;
   } catch (error) {
-    console.warn("Auth options not available during build");
+    console.warn("Auth options not available:", error.message);
     return null;
   }
 }
@@ -18,10 +20,21 @@ export async function getAuthOptions() {
 // Session kontrolü için yardımcı fonksiyon
 export async function getSessionWithAuth() {
   try {
+    // Production'da MONGODB_URI yoksa null döndür
+    if (process.env.NODE_ENV === 'production' && !process.env.MONGODB_URI) {
+      console.warn("Database not available in production");
+      return null;
+    }
+
     const authOptions = await getAuthOptions();
-    return authOptions ? await getServerSession(authOptions) : null;
+    if (!authOptions) {
+      console.warn("Auth options not available");
+      return null;
+    }
+
+    return await getServerSession(authOptions);
   } catch (error) {
-    console.warn("Session check failed:", error);
+    console.warn("Session check failed:", error.message);
     return null;
   }
 }
