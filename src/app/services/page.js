@@ -5,9 +5,12 @@ import MainLayout from "../../layouts/MainLayout";
 import AutoBreadcrumb from "@/components/AutoBreadcrumb";
 import ServiceCard from "@/components/ServiceCard";
 import { useLanguage, getText } from "@/context/LanguageContext";
+import { useHeaderNavigation } from "../../hooks/useHeaderNavigation";
 
 const ServicesPage = () => {
   const { language } = useLanguage();
+  const { getNavigationTextUpperCase, loading: navLoading } =
+    useHeaderNavigation();
   const [pageData, setPageData] = useState(null);
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -162,7 +165,9 @@ const ServicesPage = () => {
                       textAlign: "left",
                     }}
                   >
-                    {getText(pageData?.heroBanner?.title, language, "SERVICES")}
+                    {navLoading
+                      ? "SERVICES"
+                      : getNavigationTextUpperCase("services", "SERVICES")}
                   </div>
                   <AutoBreadcrumb textColor="black" justifyContent="left" />
                 </div>

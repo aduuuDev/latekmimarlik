@@ -1,7 +1,7 @@
 /**
  * A helper utility for handling multi-language fields in the application
  */
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 // Cache for active languages to avoid redundant database queries
 let activeLanguagesCache = null;
@@ -14,23 +14,23 @@ const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
  */
 export async function getActiveLanguages() {
   // Check if we have valid cached data
-  if (activeLanguagesCache && cacheTime && (Date.now() - cacheTime < CACHE_TTL)) {
+  if (activeLanguagesCache && cacheTime && Date.now() - cacheTime < CACHE_TTL) {
     return activeLanguagesCache;
   }
-  
+
   try {
     // Try to get Language model if it's been registered
     const Language = mongoose.models.Language;
-    
+
     if (Language) {
       // Get all active languages ordered by their defined order
       const languages = await Language.find({ isActive: true })
         .sort({ order: 1, name: 1 })
-        .select('code isDefault')
+        .select("code isDefault")
         .lean();
 
       if (languages && languages.length > 0) {
-        activeLanguagesCache = languages.map(lang => lang.code);
+        activeLanguagesCache = languages.map((lang) => lang.code);
         cacheTime = Date.now();
         return activeLanguagesCache;
       }
@@ -38,9 +38,9 @@ export async function getActiveLanguages() {
   } catch (error) {
     console.error("Error fetching active languages:", error);
   }
-  
+
   // Fallback to default languages if we couldn't get from DB
-  activeLanguagesCache = ['tr', 'en', 'de', 'ar'];
+  activeLanguagesCache = ["tr", "en", "de", "ar"];
   cacheTime = Date.now();
   return activeLanguagesCache;
 }
@@ -52,9 +52,11 @@ export async function getActiveLanguages() {
 export async function getDefaultLanguage() {
   try {
     const Language = mongoose.models.Language;
-    
+
     if (Language) {
-      const defaultLang = await Language.findOne({ isDefault: true }).select('code').lean();
+      const defaultLang = await Language.findOne({ isDefault: true })
+        .select("code")
+        .lean();
       if (defaultLang) {
         return defaultLang.code;
       }
@@ -62,9 +64,9 @@ export async function getDefaultLanguage() {
   } catch (error) {
     console.error("Error fetching default language:", error);
   }
-  
+
   // Default fallback
-  return 'tr';
+  return "tr";
 }
 
 /**
@@ -87,9 +89,9 @@ export async function ensureAllLanguages(multiLangObject, languages = null) {
     languages = await getActiveLanguages();
   }
 
-  if (!multiLangObject || typeof multiLangObject !== 'object') {
+  if (!multiLangObject || typeof multiLangObject !== "object") {
     // If not an object, create a new one with the value in all languages
-    const value = multiLangObject || '';
+    const value = multiLangObject || "";
     return languages.reduce((obj, lang) => {
       obj[lang] = value;
       return obj;
@@ -98,9 +100,9 @@ export async function ensureAllLanguages(multiLangObject, languages = null) {
 
   // Ensure all languages exist in the object
   const result = { ...multiLangObject };
-  languages.forEach(lang => {
+  languages.forEach((lang) => {
     if (result[lang] === undefined) {
-      result[lang] = '';
+      result[lang] = "";
     }
   });
 
@@ -131,7 +133,10 @@ export async function createMultiLanguageDocument(data, schema) {
     if (schema[section].multiLanguageFields) {
       for (const field of schema[section].multiLanguageFields) {
         if (data[section][field] !== undefined) {
-          result[section][field] = await ensureAllLanguages(data[section][field], languages);
+          result[section][field] = await ensureAllLanguages(
+            data[section][field],
+            languages
+          );
         }
       }
     }
@@ -150,28 +155,33 @@ export async function createMultiLanguageDocument(data, schema) {
       for (const arrayField of Object.keys(schema[section].arrayFields)) {
         if (Array.isArray(data[section][arrayField])) {
           result[section][arrayField] = [];
-          
+
           for (const item of data[section][arrayField]) {
             const arrayItem = {};
-            
+
             // Process array item fields
             if (schema[section].arrayFields[arrayField].fields) {
-              for (const field of schema[section].arrayFields[arrayField].fields) {
+              for (const field of schema[section].arrayFields[arrayField]
+                .fields) {
                 if (item[field] !== undefined) {
                   arrayItem[field] = item[field];
                 }
               }
             }
-            
+
             // Process array item multi-language fields
             if (schema[section].arrayFields[arrayField].multiLanguageFields) {
-              for (const field of schema[section].arrayFields[arrayField].multiLanguageFields) {
+              for (const field of schema[section].arrayFields[arrayField]
+                .multiLanguageFields) {
                 if (item[field] !== undefined) {
-                  arrayItem[field] = await ensureAllLanguages(item[field], languages);
+                  arrayItem[field] = await ensureAllLanguages(
+                    item[field],
+                    languages
+                  );
                 }
               }
             }
-            
+
             result[section][arrayField].push(arrayItem);
           }
         } else {
@@ -189,39 +199,45 @@ export async function createMultiLanguageDocument(data, schema) {
  */
 export const homepageSchema = {
   heroBanner: {
-    multiLanguageFields: ['subtitle', 'title', 'buttonText'],
-    fields: ['buttonLink', 'backgroundImage']
+    multiLanguageFields: ["subtitle", "title", "buttonText"],
+    fields: ["buttonLink", "backgroundImage"],
   },
   numbersSection: {
-    multiLanguageFields: ['subtitle', 'title', 'content'],
-    fields: ['image']
+    multiLanguageFields: ["subtitle", "title", "content"],
+    fields: ["image"],
   },
   servicesSection: {
-    multiLanguageFields: ['subtitle', 'title', 'buttonText'],
-    fields: ['buttonLink', 'backgroundImage']
+    multiLanguageFields: ["subtitle", "title", "buttonText"],
+    fields: ["buttonLink", "backgroundImage"],
   },
   projectsSection: {
-    multiLanguageFields: ['subtitle', 'title', 'buttonText'],
-    fields: ['buttonLink']
+    multiLanguageFields: ["subtitle", "title", "buttonText"],
+    fields: ["buttonLink"],
   },
   blogSection: {
-    multiLanguageFields: ['subtitle', 'title'],
-    fields: ['backgroundImage']
+    multiLanguageFields: ["subtitle", "title"],
+    fields: ["backgroundImage"],
   },
   contactSection: {
-    multiLanguageFields: ['subtitle', 'title', 'description', 'phoneTitle', 'emailTitle'],
+    multiLanguageFields: [
+      "subtitle",
+      "title",
+      "description",
+      "phoneTitle",
+      "emailTitle",
+    ],
     fields: [],
     arrayFields: {
       phones: {
-        fields: ['number', 'link']
+        fields: ["number", "link"],
       },
       emails: {
-        fields: ['address', 'link']
-      }
-    }
+        fields: ["address", "link"],
+      },
+    },
   },
   seo: {
-    multiLanguageFields: ['pageTitle', 'metaDescription', 'keywords'],
-    fields: []
-  }
+    multiLanguageFields: ["pageTitle", "metaDescription", "keywords"],
+    fields: [],
+  },
 };

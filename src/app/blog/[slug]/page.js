@@ -11,9 +11,15 @@ import {
   generateSlug,
 } from "../../../utils/mockData";
 import AutoBreadcrumb from "@/components/AutoBreadcrumb";
+import { useHeaderNavigation } from "../../../hooks/useHeaderNavigation";
 
 const BlogDetailPage = () => {
   const params = useParams();
+  const {
+    getNavigationTextUpperCase,
+    getNavigationText,
+    loading: navLoading,
+  } = useHeaderNavigation();
   const blog = getBlogBySlug(params.slug);
   const allBlogs = getAllBlogs();
   const recentPosts = allBlogs.slice(0, 5); // Get first 5 blogs for recent posts
@@ -93,7 +99,9 @@ const BlogDetailPage = () => {
                       textAlign: "left",
                     }}
                   >
-                    BLOG
+                    {navLoading
+                      ? "BLOG"
+                      : getNavigationTextUpperCase("blog", "BLOG")}
                   </div>
                   <AutoBreadcrumb
                     textColor="black"
@@ -101,7 +109,9 @@ const BlogDetailPage = () => {
                     customBreadcrumbs={[
                       {
                         href: "/blog",
-                        label: "Blog",
+                        label: navLoading
+                          ? "Blog"
+                          : getNavigationText("blog", "Blog"),
                       },
                       {
                         href: `/blog/${params.slug}`,
@@ -212,7 +222,7 @@ const BlogDetailPage = () => {
                 <div className="post-navigation">
                   <ul className="pagination pagination_mod-a">
                     <li>
-                      <Link href="/">BACK TO BLOG</Link>
+                      <Link href="/blog">BACK TO BLOG</Link>
                     </li>
                   </ul>
                 </div>

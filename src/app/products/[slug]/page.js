@@ -11,9 +11,15 @@ import {
 } from "../../../utils/mockData";
 import { useParams } from "next/navigation";
 import Link from "next/link";
+import { useHeaderNavigation } from "../../../hooks/useHeaderNavigation";
 
 export default function ProductDetail() {
   const params = useParams();
+  const {
+    getNavigationTextUpperCase,
+    getNavigationText,
+    loading: navLoading,
+  } = useHeaderNavigation();
   const product = getProductBySlug(params.slug);
   const allProducts = getAllProducts();
   const [activeImage, setActiveImage] = useState(0);
@@ -77,7 +83,9 @@ export default function ProductDetail() {
                       textAlign: "left",
                     }}
                   >
-                    PRODUCTS
+                    {navLoading
+                      ? "PRODUCTS"
+                      : getNavigationTextUpperCase("products", "PRODUCTS")}
                   </div>
                   <AutoBreadcrumb
                     textColor="black"
@@ -85,7 +93,9 @@ export default function ProductDetail() {
                     customBreadcrumbs={[
                       {
                         href: "/products",
-                        label: "Products",
+                        label: navLoading
+                          ? "Products"
+                          : getNavigationText("products", "Products"),
                       },
                       {
                         href: `/products/${params.slug}`,

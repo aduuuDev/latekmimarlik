@@ -3507,14 +3507,15 @@ a:hover, a:focus {
 }
 
 .prague-header .prague-social-nav .social-content a {
-  width: auto;
-  min-width: 60px;
-  height: 30px;
+  width: 34px;
+  min-width: auto;
+  height: 34px;
   line-height: 28px;
-  padding: 0 10px;
   text-align: center;
   font-size: 12px;
   white-space: nowrap;
+  background-color: white;
+  color: black;
 }
 
 .prague-header .prague-social-nav .social-content a i {
@@ -3592,6 +3593,9 @@ a:hover, a:focus {
 
 .prague-header.light .prague-social-nav a {
   border: 1px solid rgba(242, 242, 242, 0.4);
+}
+
+.prague-header.light .prague-social-nav a.language-icon{
   color: white;
 }
 
