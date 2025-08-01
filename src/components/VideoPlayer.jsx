@@ -8,9 +8,11 @@ const VideoPlayer = ({
   coverImage = "/img/about-us/beautiful-shot-oresund-bridge-sweden-enveloped-fog.jpg",
 }) => {
   const videoRef = useRef(null);
+  const containerRef = useRef(null);
   const [error, setError] = useState(null);
   const [showVideo, setShowVideo] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -27,6 +29,17 @@ const VideoPlayer = ({
 
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
+
+  useEffect(() => {
+    if (!isMobile) return; // Sadece mobil cihazlarda scroll listener çalışsın
+
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isMobile]);
 
   const handlePlayClick = () => {
     setShowVideo(true);
@@ -104,9 +117,18 @@ const VideoPlayer = ({
     );
   }
 
+  // Scroll efekti için hesaplamalar
+  const getParallaxOffset = () => {
+    if (!isMobile) return 0;
+
+    // Basit parallax: scroll pozisyonunun bir kısmını kullan
+    return scrollY * 0.5; // 0.5 parallax hızı
+  };
+
   // Arka plan görseli ve oynatma butonu (parallax efektli)
   return (
     <div
+      ref={containerRef}
       style={{
         width: "100%",
         height: "500px",
@@ -114,22 +136,44 @@ const VideoPlayer = ({
         overflow: "hidden",
       }}
     >
-      {/* Parallax background container */}
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          backgroundImage: `url(${coverImage})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          backgroundAttachment: isMobile ? "scroll" : "fixed",
-          zIndex: 1,
-        }}
-      />
+      {/* Desktop için parallax background */}
+      {!isMobile && (
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundImage: `url(${coverImage})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            backgroundAttachment: "fixed",
+            zIndex: 1,
+          }}
+        />
+      )}
+
+      {/* Mobil için scroll efektli background */}
+      {isMobile && (
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "130%", // Daha büyük yapıyoruz ki scroll efekti gözüksün
+            backgroundImage: `url(${coverImage})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            transform: `translateY(${getParallaxOffset()}px)`,
+            zIndex: 1,
+          }}
+        />
+      )}
+
       {/* Oynatma butonu */}
       <div
         style={{
