@@ -46,100 +46,81 @@ export function LanguageProvider({ children }) {
   const [language, setLanguage] = useState(defaultLanguageCode);
   const [languages, setLanguages] = useState(defaultLanguages);
   const [loading, setLoading] = useState(true);
-<<<<<<< Updated upstream
-  
+
   // Initial client-side check for stored language preference
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       try {
-        const storedLanguage = localStorage.getItem('preferredLanguage');
-        console.log('Initial localStorage check:', storedLanguage);
-        
+        const storedLanguage = localStorage.getItem("preferredLanguage");
+        console.log("Initial localStorage check:", storedLanguage);
+
         if (storedLanguage) {
           setLanguage(storedLanguage);
         }
       } catch (error) {
-        console.error('Error reading from localStorage:', error);
+        console.error("Error reading from localStorage:", error);
       }
     }
   }, []);
-  
-=======
 
->>>>>>> Stashed changes
   // Fetch available languages from API
   useEffect(() => {
     // Set default language or use stored preference
     const setDefaultLanguage = (defaultCode, availableLanguages) => {
-<<<<<<< Updated upstream
       try {
-        const storedLanguage = localStorage.getItem('preferredLanguage');
-        console.log('Setting default language, stored preference:', storedLanguage);
-        
-        if (storedLanguage && availableLanguages.some(lang => lang.code === storedLanguage)) {
-          console.log('Using stored language preference:', storedLanguage);
+        const storedLanguage = localStorage.getItem("preferredLanguage");
+        console.log(
+          "Setting default language, stored preference:",
+          storedLanguage
+        );
+
+        if (
+          storedLanguage &&
+          availableLanguages.some((lang) => lang.code === storedLanguage)
+        ) {
+          console.log("Using stored language preference:", storedLanguage);
           setLanguage(storedLanguage);
         } else {
           // Try browser language
-          const browserLang = navigator.language?.split('-')[0];
-          if (browserLang && availableLanguages.some(lang => lang.code === browserLang)) {
-            console.log('Using browser language:', browserLang);
+          const browserLang = navigator.language?.split("-")[0];
+          if (
+            browserLang &&
+            availableLanguages.some((lang) => lang.code === browserLang)
+          ) {
+            console.log("Using browser language:", browserLang);
             setLanguage(browserLang);
-            localStorage.setItem('preferredLanguage', browserLang);
+            localStorage.setItem("preferredLanguage", browserLang);
           } else {
             // Use default language from API or fallback
-            console.log('Using default language:', defaultCode || defaultLanguageCode);
+            console.log(
+              "Using default language:",
+              defaultCode || defaultLanguageCode
+            );
             setLanguage(defaultCode || defaultLanguageCode);
-            localStorage.setItem('preferredLanguage', defaultCode || defaultLanguageCode);
+            localStorage.setItem(
+              "preferredLanguage",
+              defaultCode || defaultLanguageCode
+            );
           }
-=======
-      const storedLanguage = localStorage.getItem("preferredLanguage");
-
-      if (
-        storedLanguage &&
-        availableLanguages.some((lang) => lang.code === storedLanguage)
-      ) {
-        setLanguage(storedLanguage);
-      } else {
-        // Try browser language
-        const browserLang = navigator.language?.split("-")[0];
-        if (
-          browserLang &&
-          availableLanguages.some((lang) => lang.code === browserLang)
-        ) {
-          setLanguage(browserLang);
-          localStorage.setItem("preferredLanguage", browserLang);
-        } else {
-          // Use default language from API or fallback
-          setLanguage(defaultCode || defaultLanguageCode);
-          localStorage.setItem(
-            "preferredLanguage",
-            defaultCode || defaultLanguageCode
-          );
->>>>>>> Stashed changes
         }
       } catch (error) {
-        console.error('Error in setDefaultLanguage:', error);
+        console.error("Error in setDefaultLanguage:", error);
         setLanguage(defaultCode || defaultLanguageCode);
       }
     };
 
     const fetchLanguages = async () => {
       try {
-<<<<<<< Updated upstream
-        const response = await fetch('/api/languages', {
-          cache: 'no-store',
+        const response = await fetch("/api/languages", {
+          cache: "no-store",
           headers: {
-            'Cache-Control': 'no-cache'
-          }
+            "Cache-Control": "no-cache",
+          },
         });
-=======
-        const response = await fetch("/api/languages");
->>>>>>> Stashed changes
         const data = await response.json();
 
         if (data.success && data.languages && data.languages.length > 0) {
-          console.log('Languages fetched from API:', data.languages);
+          console.log("Languages fetched from API:", data.languages);
           setLanguages(data.languages);
 
           // Find default language
@@ -163,74 +144,59 @@ export function LanguageProvider({ children }) {
 
   useEffect(() => {
     if (!loading && !languagesLoaded) {
-<<<<<<< Updated upstream
       try {
-        const storedLanguage = localStorage.getItem('preferredLanguage');
-        console.log('Languages loaded check, stored preference:', storedLanguage);
-        
-        if (storedLanguage && languages.some(lang => lang.code === storedLanguage)) {
-          console.log('Setting language from stored preference:', storedLanguage);
+        const storedLanguage = localStorage.getItem("preferredLanguage");
+        console.log(
+          "Languages loaded check, stored preference:",
+          storedLanguage
+        );
+
+        if (
+          storedLanguage &&
+          languages.some((lang) => lang.code === storedLanguage)
+        ) {
+          console.log(
+            "Setting language from stored preference:",
+            storedLanguage
+          );
           setLanguage(storedLanguage);
         } else {
           // Find default language
-          const defaultLang = languages.find(lang => lang.isDefault);
+          const defaultLang = languages.find((lang) => lang.isDefault);
           if (defaultLang) {
-            console.log('Setting default language from API:', defaultLang.code);
+            console.log("Setting default language from API:", defaultLang.code);
             setLanguage(defaultLang.code);
-            localStorage.setItem('preferredLanguage', defaultLang.code);
+            localStorage.setItem("preferredLanguage", defaultLang.code);
           }
-=======
-      const storedLanguage = localStorage.getItem("preferredLanguage");
-
-      if (
-        storedLanguage &&
-        languages.some((lang) => lang.code === storedLanguage)
-      ) {
-        setLanguage(storedLanguage);
-      } else {
-        // Find default language
-        const defaultLang = languages.find((lang) => lang.isDefault);
-        if (defaultLang) {
-          setLanguage(defaultLang.code);
-          localStorage.setItem("preferredLanguage", defaultLang.code);
->>>>>>> Stashed changes
         }
       } catch (error) {
-        console.error('Error in language loading effect:', error);
+        console.error("Error in language loading effect:", error);
       } finally {
         setLanguagesLoaded(true);
       }
-<<<<<<< Updated upstream
-=======
-
-      setLanguagesLoaded(true);
->>>>>>> Stashed changes
     }
   }, [loading, languages, languagesLoaded]);
 
   // Change language function
   const changeLanguage = (newLanguage) => {
-<<<<<<< Updated upstream
-    if (languages.some(lang => lang.code === newLanguage)) {
-      console.log('Changing language to:', newLanguage);
+    if (languages.some((lang) => lang.code === newLanguage)) {
+      console.log("Changing language to:", newLanguage);
       setLanguage(newLanguage);
       try {
-        localStorage.setItem('preferredLanguage', newLanguage);
-        console.log('Language saved to localStorage in changeLanguage:', newLanguage);
-        
+        localStorage.setItem("preferredLanguage", newLanguage);
+        console.log(
+          "Language saved to localStorage in changeLanguage:",
+          newLanguage
+        );
+
         // Debug: Verify immediately that the value was saved
-        const verifyValue = localStorage.getItem('preferredLanguage');
-        console.log('Verification - localStorage now contains:', verifyValue);
+        const verifyValue = localStorage.getItem("preferredLanguage");
+        console.log("Verification - localStorage now contains:", verifyValue);
       } catch (error) {
-        console.error('Error saving language to localStorage:', error);
+        console.error("Error saving language to localStorage:", error);
       }
     } else {
-      console.warn('Attempted to set invalid language:', newLanguage);
-=======
-    if (languages.some((lang) => lang.code === newLanguage)) {
-      setLanguage(newLanguage);
-      localStorage.setItem("preferredLanguage", newLanguage);
->>>>>>> Stashed changes
+      console.warn("Attempted to set invalid language:", newLanguage);
     }
   };
 
@@ -281,4 +247,3 @@ export function getText(textObject, language, fallback = "") {
   // If absolutely nothing works, return the fallback
   return fallback;
 }
-
