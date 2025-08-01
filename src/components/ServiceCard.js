@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import { generateSlug } from "../utils/mockData";
 
 const ServiceCard = ({ service, className = "" }) => {
   return (
@@ -44,7 +45,7 @@ const ServiceCard = ({ service, className = "" }) => {
             </p>
           </div>
           <Link
-            href={`/services/${service.slug}`}
+            href={`/services/${generateSlug(service.title)}`}
             className="prague-services-link a-btn-2 creative anima"
             style={{
               width: "fit-content",

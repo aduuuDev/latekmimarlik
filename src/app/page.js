@@ -9,7 +9,11 @@ import TestimonialsSlider from "../components/TestimonialsSlider";
 import ServiceCard from "../components/ServiceCard";
 import BlogCard from "../components/BlogCard";
 import SeoHead from "../components/SeoHead";
-import { getRecentServices, getRecentBlogs } from "../utils/mockData";
+import {
+  getRecentServices,
+  getRecentBlogs,
+  generateSlug,
+} from "../utils/mockData";
 import { useLanguage, getText } from "../context/LanguageContext";
 
 const HomePage = () => {

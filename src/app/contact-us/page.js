@@ -50,6 +50,7 @@ export default function ContactUs() {
                       fontSize: "24px",
                       padding: "50px 0 0 0",
                       fontWeight: "400",
+                      textAlign: "left",
                     }}
                   >
                     CONTACT US

@@ -3,10 +3,11 @@
 import { useEffect, useRef, useState, useMemo } from "react";
 import MainLayout from "../../layouts/MainLayout";
 import AutoBreadcrumb from "@/components/AutoBreadcrumb";
-import { getAllProjects } from "@/utils/mockData";
+import Pagination from "@/components/Pagination";
+import { getAllProjects, generateSlug } from "@/utils/mockData";
 import Link from "next/link";
 
-export default function WorkGrid() {
+export default function Projects() {
   const [activeFilters, setActiveFilters] = useState({
     year: "",
     location: "",
@@ -18,6 +19,9 @@ export default function WorkGrid() {
     location: false,
     category: false,
   });
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const projectsPerPage = 6;
 
   const dropdownRefs = useRef({});
   const projects = getAllProjects();
@@ -91,6 +95,23 @@ export default function WorkGrid() {
     });
   }, [projects, activeFilters]);
 
+  // Pagination calculations
+  const totalPages = Math.ceil(filteredProjects.length / projectsPerPage);
+  const startIndex = (currentPage - 1) * projectsPerPage;
+  const endIndex = startIndex + projectsPerPage;
+  const currentProjects = filteredProjects.slice(startIndex, endIndex);
+
+  // Page change function
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  // Reset to first page when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [activeFilters]);
+
   return (
     <MainLayout headerTheme="dark">
       <div
@@ -114,6 +135,7 @@ export default function WorkGrid() {
                       fontSize: "24px",
                       padding: "50px 0 0 0",
                       fontWeight: "400",
+                      textAlign: "left",
                     }}
                   >
                     PROJECTS
@@ -246,7 +268,7 @@ export default function WorkGrid() {
       </div>
 
       {/* MAIN BODY */}
-      <div className="container margin-lg-120t margin-sm-80t margin-xs-20b margin-md-30b margin-lg-60b">
+      <div className="container margin-lg-30t margin-sm-30t margin-xs-20b margin-md-30b margin-lg-60b">
         <div className="row">
           <div className="no-padd-left no-padd-right margin-lg-20t">
             <div className="wrapper">
@@ -262,9 +284,10 @@ export default function WorkGrid() {
                   data-columns="prague_count_col1"
                   data-gap="prague_gap_col10"
                 >
-                  {filteredProjects.map((project, index) => (
+                  {currentProjects.map((project, index) => (
                     <div
                       key={project.id}
+                      style={{ paddingBottom: "0", paddingRight: "0" }}
                       className={`project-list-item ${
                         index % 2 === 1 ? "column_paralax" : ""
                       }`}
@@ -275,7 +298,7 @@ export default function WorkGrid() {
                             <img
                               src={project.image}
                               className="s-img-switch"
-                              alt={`${project.slug} image`}
+                              alt={`${generateSlug(project.title)} image`}
                             />
                           </div>
 
@@ -285,17 +308,16 @@ export default function WorkGrid() {
                             </div>
                             <h3 className="project-list-title">
                               <Link
-                                href={`/projects/${project.slug}`}
+                                href={`/projects/${generateSlug(
+                                  project.title
+                                )}`}
                                 target="_self"
                               >
                                 {project.title}
                               </Link>
                             </h3>
-                            <div className="project-list-excerpt">
-                              <p>{project.excerpt}</p>
-                            </div>
                             <Link
-                              href={`/projects/${project.slug}`}
+                              href={`/projects/${generateSlug(project.title)}`}
                               className="project-list-link a-btn-arrow-2"
                               target="_self"
                             >
@@ -312,7 +334,24 @@ export default function WorkGrid() {
             </div>
           </div>
         </div>
+        {/* Pagination */}
+        <div className="container">
+          <div className="row">
+            <div className="col-sm-12">
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+                totalItems={filteredProjects.length}
+                startIndex={startIndex}
+                endIndex={endIndex}
+                itemsPerPage={projectsPerPage}
+              />
+            </div>
+          </div>
+        </div>
       </div>
+
       {/* /MAIN BODY */}
     </MainLayout>
   );

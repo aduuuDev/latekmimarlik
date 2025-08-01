@@ -1,12 +1,29 @@
 "use client";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import MainLayout from "../../layouts/MainLayout";
-import { getAllBlogs } from "../../utils/mockData";
+import Pagination from "@/components/Pagination";
+import { getAllBlogs, generateSlug } from "../../utils/mockData";
 import AutoBreadcrumb from "@/components/AutoBreadcrumb";
 
 export default function Blog() {
-  const blogPosts = getAllBlogs();
+  const [currentPage, setCurrentPage] = useState(1);
+  const blogPostsPerPage = 4;
+
+  const allBlogPosts = getAllBlogs();
+
+  // Pagination calculations
+  const totalPages = Math.ceil(allBlogPosts.length / blogPostsPerPage);
+  const startIndex = (currentPage - 1) * blogPostsPerPage;
+  const endIndex = startIndex + blogPostsPerPage;
+  const currentBlogPosts = allBlogPosts.slice(startIndex, endIndex);
+
+  // Page change function
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <MainLayout headerTheme="dark">
@@ -32,6 +49,7 @@ export default function Blog() {
                       fontSize: "24px",
                       padding: "50px 0 0 0",
                       fontWeight: "400",
+                      textAlign: "left",
                     }}
                   >
                     BLOG
@@ -50,7 +68,7 @@ export default function Blog() {
           <div className="col-sm-12 no-padd">
             <div className="no-padd">
               <div className="row prague_blog prague_count_col1 prague_gap_col10 no-footer-content">
-                {blogPosts.map((post, index) => (
+                {currentBlogPosts.map((post, index) => (
                   <div key={index} className="blog-post col-xs-12">
                     <div className="prague-blog-list-wrapper">
                       <div className="blog-list-img">
@@ -65,13 +83,15 @@ export default function Blog() {
                       <div className="blog-list-content">
                         <div className="blog-list-post-date">{post.date}</div>
                         <h3 className="blog-list-post-title">
-                          <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+                          <Link href={`/blog/${generateSlug(post.title)}`}>
+                            {post.title}
+                          </Link>
                         </h3>
                         <div className="blog-list-post-excerpt">
                           <p>{post.excerpt}</p>
                         </div>
                         <Link
-                          href={`/blog/${post.slug}`}
+                          href={`/blog/${generateSlug(post.title)}`}
                           className="blog-list-link a-btn-arrow-2"
                         >
                           <span className="arrow-right"></span>
@@ -83,6 +103,23 @@ export default function Blog() {
                 ))}
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Pagination */}
+      <div className="container" style={{ paddingBottom: "30px" }}>
+        <div className="row">
+          <div className="col-sm-12">
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+              totalItems={allBlogPosts.length}
+              startIndex={startIndex}
+              endIndex={endIndex}
+              itemsPerPage={blogPostsPerPage}
+            />
           </div>
         </div>
       </div>

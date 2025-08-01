@@ -5,7 +5,11 @@ import { useParams } from "next/navigation";
 import MainLayout from "../../../layouts/MainLayout";
 import Image from "next/image";
 import Link from "next/link";
-import { getBlogBySlug, getAllBlogs } from "../../../utils/mockData";
+import {
+  getBlogBySlug,
+  getAllBlogs,
+  generateSlug,
+} from "../../../utils/mockData";
 import AutoBreadcrumb from "@/components/AutoBreadcrumb";
 
 const BlogDetailPage = () => {
@@ -86,6 +90,7 @@ const BlogDetailPage = () => {
                       fontSize: "24px",
                       padding: "50px 0 0 0",
                       fontWeight: "400",
+                      textAlign: "left",
                     }}
                   >
                     BLOG
@@ -221,8 +226,10 @@ const BlogDetailPage = () => {
                 <h3 className="prague-title-w">Recent Posts</h3>
                 <ul>
                   {recentPosts.map((post) => (
-                    <li key={post.slug}>
-                      <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+                    <li key={generateSlug(post.title)}>
+                      <Link href={`/blog/${generateSlug(post.title)}`}>
+                        {post.title}
+                      </Link>
                     </li>
                   ))}
                 </ul>

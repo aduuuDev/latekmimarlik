@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { generateSlug } from "../utils/mockData";
 
 const BlogCard = ({ blog, className = "" }) => {
   // Format date for display
@@ -39,7 +40,7 @@ const BlogCard = ({ blog, className = "" }) => {
 
         <div className="vertical-align prague-clients-link blog-card-link">
           <Link
-            href={`/blog/${blog.slug}`}
+            href={`/blog/${generateSlug(blog.title)}`}
             className="prague-clients-name a-btn-arrow"
           >
             READ MORE <span className="arrow-right grey"></span>
