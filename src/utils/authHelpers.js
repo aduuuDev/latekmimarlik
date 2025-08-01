@@ -1,5 +1,30 @@
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "../app/api/auth/[...nextauth]/route";
+
+// Auth options'ı dinamik olarak import et
+export async function getAuthOptions() {
+  try {
+    // Build zamanında auth import etme
+    if (typeof window === 'undefined' && process.env.NODE_ENV === 'production') {
+      return null;
+    }
+    const { authOptions } = await import("../app/api/auth/[...nextauth]/route");
+    return authOptions;
+  } catch (error) {
+    console.warn("Auth options not available during build");
+    return null;
+  }
+}
+
+// Session kontrolü için yardımcı fonksiyon
+export async function getSessionWithAuth() {
+  try {
+    const authOptions = await getAuthOptions();
+    return authOptions ? await getServerSession(authOptions) : null;
+  } catch (error) {
+    console.warn("Session check failed:", error);
+    return null;
+  }
+}
 
 /**
  * İstek yetkilendirmesini kontrol eder
@@ -9,7 +34,7 @@ import { authOptions } from "../app/api/auth/[...nextauth]/route";
 export async function isAuthenticated(req) {
   try {
     // Session kontrolü
-    const session = await getServerSession(authOptions);
+    const session = await getSessionWithAuth();
 
     if (!session || !session.user) {
       return { success: false, message: 'Unauthorized' };

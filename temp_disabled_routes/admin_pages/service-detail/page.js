@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, Suspense } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
@@ -9,7 +9,7 @@ import FileUploader from '@/components/FileUploader';
 import styles from '../page.module.css';
 import { useLanguage, getText } from '@/context/LanguageContext';
 
-function ServiceDetailEditorContent() {
+export default function ServiceDetailEditor() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -807,13 +807,5 @@ function ServiceDetailEditorContent() {
         </div>
       </div>
     </AdminLayout>
-  );
-}
-
-export default function ServiceDetailEditor() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <ServiceDetailEditorContent />
-    </Suspense>
   );
 }

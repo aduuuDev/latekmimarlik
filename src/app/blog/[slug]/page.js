@@ -32,7 +32,7 @@ const BlogDetailPage = () => {
             <div className="col-12">
               <div className="text-center" style={{ padding: "100px 0" }}>
                 <h1>Blog Post Not Found</h1>
-                <p>The blog post you're looking for doesn't exist.</p>
+                <p>The blog post you&apos;re looking for doesn&apos;t exist.</p>
                 <Link href="/" className="a-btn creative anima">
                   <span className="a-btn-line"></span>
                   GO HOME

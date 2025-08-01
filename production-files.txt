@@ -1,0 +1,55 @@
+# Production'a aktarılması gereken dosyalar
+
+## Temel Dosyalar (Zorunlu)
+.next/                          # Build çıktıları (tamamı)
+public/                         # Static dosyalar (resimler, CSS, JS)
+src/app/                        # Uygulama sayfaları (admin/auth hariç)
+src/components/                 # React bileşenleri
+src/context/                    # Context dosyaları
+src/hooks/                      # Custom hooks
+src/layouts/                    # Layout bileşenleri
+src/lib/                        # Utility fonksiyonlar
+src/models/                     # Database modelleri
+src/utils/                      # Yardımcı fonksiyonlar
+package.json                    # Bağımlılıklar
+package-lock.json               # Lock dosyası
+next.config.js                  # Next.js konfigürasyonu
+.env.production                 # Production environment değişkenleri
+
+## Konfigürasyon Dosyaları
+jsconfig.json                   # JavaScript konfigürasyonu
+postcss.config.mjs              # PostCSS konfigürasyonu
+eslint.config.mjs               # ESLint konfigürasyonu
+
+## Dokümantasyon
+README.md                       # Proje dokümantasyonu
+PRODUCTION_DEPLOYMENT.md        # Deployment rehberi
+production-files.txt            # Bu dosya
+
+## Deployment Scripts
+deploy.sh                       # Deployment script'i
+
+## Data Dosyaları (Opsiyonel)
+latekmimarlik.blogs.json        # Blog verileri
+latekmimarlik.projects.json     # Proje verileri
+latekmimarlik.services.json     # Hizmet verileri
+
+## Aktarılmaması Gereken Dosyalar
+node_modules/                   # Bağımlılıklar (sunucuda yüklenecek)
+.env                           # Development environment
+.env.local                     # Local environment
+temp_disabled_routes/          # Geçici olarak devre dışı bırakılan dosyalar
+.git/                          # Git repository
+.gitignore                     # Git ignore dosyası
+
+## Geçici Olarak Devre Dışı Bırakılan Dosyalar
+temp_disabled_routes/admin_pages/       # Admin sayfaları
+temp_disabled_routes/admin_api_full/    # Admin API'ları
+temp_disabled_routes/auth_pages/        # Auth sayfaları
+temp_disabled_routes/auth_api/          # Auth API'ları
+
+## Toplam Build Boyutu
+- .next/ klasörü: ~50MB
+- public/ klasörü: ~20MB
+- src/ klasörü: ~5MB
+- Toplam: ~75MB (node_modules hariç)

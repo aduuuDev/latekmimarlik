@@ -10,8 +10,19 @@ export default function ComingSoon() {
     minutes: 0,
     seconds: 0,
   });
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    // Mobile kontrolü
+    const checkMobile = () => {
+      if (typeof window !== 'undefined') {
+        setIsMobile(window.innerWidth <= 768);
+      }
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
     // Geri sayım hedef tarihi (2022/01/10 12:00)
     const targetDate = new Date("2022-01-10T12:00:00").getTime();
 
@@ -33,7 +44,10 @@ export default function ComingSoon() {
       }
     }, 1000);
 
-    return () => clearInterval(timer);
+    return () => {
+      clearInterval(timer);
+      window.removeEventListener('resize', checkMobile);
+    };
   }, []);
 
   const handleSubmit = (e) => {
@@ -77,7 +91,7 @@ export default function ComingSoon() {
                         data-mobile="DAY"
                         data-desktop="DAYS"
                       >
-                        {window.innerWidth <= 768 ? "DAY" : "DAYS"}
+                        {isMobile ? "DAY" : "DAYS"}
                       </div>
                     </li>
 
@@ -88,7 +102,7 @@ export default function ComingSoon() {
                         data-mobile="HOUR"
                         data-desktop="HOURS"
                       >
-                        {window.innerWidth <= 768 ? "HOUR" : "HOURS"}
+                        {isMobile ? "HOUR" : "HOURS"}
                       </div>
                     </li>
 
@@ -99,7 +113,7 @@ export default function ComingSoon() {
                         data-mobile="MIN"
                         data-desktop="MINS"
                       >
-                        {window.innerWidth <= 768 ? "MIN" : "MINS"}
+                        {isMobile ? "MIN" : "MINS"}
                       </div>
                     </li>
 
@@ -110,7 +124,7 @@ export default function ComingSoon() {
                         data-mobile="SEC"
                         data-desktop="SECS"
                       >
-                        {window.innerWidth <= 768 ? "SEC" : "SECS"}
+                        {isMobile ? "SEC" : "SECS"}
                       </div>
                     </li>
                   </ul>
