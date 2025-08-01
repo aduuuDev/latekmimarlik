@@ -18,19 +18,6 @@ export async function getAuthOptions() {
 // Session kontrolü için yardımcı fonksiyon
 export async function getSessionWithAuth() {
   try {
-    // Vercel'de geçici authentication bypass (sadece test için)
-    if (process.env.VERCEL && process.env.NODE_ENV === 'production') {
-      console.warn("Authentication bypassed for Vercel testing");
-      return {
-        user: {
-          id: 'vercel-test-user',
-          username: 'admin',
-          role: 'admin',
-          name: 'Vercel Test User'
-        }
-      };
-    }
-
     const authOptions = await getAuthOptions();
     return authOptions ? await getServerSession(authOptions) : null;
   } catch (error) {

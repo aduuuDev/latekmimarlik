@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
@@ -100,22 +100,11 @@ export default function LoginPage() {
     }
   };
   
-  // İlk kullanıcı kontrolü - sadece gerektiğinde aktif et
   const checkFirstUser = async () => {
-    // Bu kontrol şu an devre dışı - gerekirse aktif edilebilir
-    return;
-
-    // Client-side'da çalıştığından emin ol
-    if (typeof window === 'undefined') {
-      return;
-    }
-
     try {
-      // Absolute URL kullan
-      const baseUrl = window.location.origin;
-      const response = await fetch(`${baseUrl}/api/admin/users/count`);
+      const response = await fetch('/api/admin/users/count');
       const data = await response.json();
-
+      
       if (data.count === 0) {
         setShowSetup(true);
       }
@@ -123,10 +112,10 @@ export default function LoginPage() {
       console.error('Kullanıcı kontrolü sırasında bir hata oluştu:', error);
     }
   };
-
+  
   // Component yüklendiğinde ilk kullanıcı var mı kontrol et
-  useEffect(() => {
-    // checkFirstUser(); // Şu an devre dışı
+  useState(() => {
+    checkFirstUser();
   }, []);
   
   return (
