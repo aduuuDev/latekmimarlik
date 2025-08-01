@@ -562,6 +562,11 @@ export const getRecentProjects = (limit = 6) => {
   return projectData.slice(0, limit);
 };
 
+// Helper function to get all simple projects
+export const getAllSimpleProjects = () => {
+  return projectData;
+};
+
 export const productData = [
   {
     id: 2075,
