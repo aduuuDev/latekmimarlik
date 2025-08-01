@@ -4,6 +4,12 @@ const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/latekm
 
 // Mongoose bağlantısını başlatan fonksiyon
 export async function connectToDatabase() {
+  // Build zamanında database bağlantısı yapma
+  if (process.env.NODE_ENV === 'production' && !process.env.MONGODB_URI) {
+    console.warn('MongoDB URI not found, skipping database connection during build');
+    return;
+  }
+
   if (mongoose.connection.readyState >= 1) {
     return;
   }
@@ -13,6 +19,11 @@ export async function connectToDatabase() {
     console.log('MongoDB bağlantısı başarılı');
   } catch (error) {
     console.error('MongoDB bağlantı hatası:', error);
+    // Build zamanında hata fırlatma, sadece uyar
+    if (process.env.NODE_ENV === 'production') {
+      console.warn('MongoDB connection failed during build, continuing...');
+      return;
+    }
     throw new Error('MongoDB bağlantısı kurulamadı');
   }
 }

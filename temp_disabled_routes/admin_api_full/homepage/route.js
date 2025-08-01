@@ -1,6 +1,7 @@
 import { connectToDatabase } from "@/lib/db";
 import Homepage from "@/models/Homepage";
-import { getSessionWithAuth } from "@/utils/authHelpers";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "../../auth/[...nextauth]/route";
 import {
   createMultiLanguageDocument,
   homepageSchema,
@@ -219,7 +220,7 @@ export async function GET() {
 // PUT handler - Update homepage content
 export async function PUT(request) {
   try {
-    const session = await getSessionWithAuth();
+    const session = await getServerSession(authOptions);
 
     // Yetkilendirme kontrolü
     if (!session || !session.user) {
