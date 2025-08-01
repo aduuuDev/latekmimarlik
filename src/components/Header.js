@@ -4,12 +4,13 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useHamburgerMenu } from "../hooks/useHamburgerMenu";
-import { getAllServices } from "../utils/mockData";
+import { getAllServices, generateSlug } from "../utils/mockData";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useLanguage } from "../context/LanguageContext";
 
 const Header = ({ theme = "light" }) => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [showSocial, setShowSocial] = useState(false);
 
   // Global hamburger menu hook'u kullan
   const { isMenuOpen, toggleMenu, closeMenu } = useHamburgerMenu();
@@ -18,7 +19,7 @@ const Header = ({ theme = "light" }) => {
   const services = getAllServices();
 
   // Get current language
-  const { language } = useLanguage();
+  const { language, changeLanguage, languages } = useLanguage();
 
   // Scroll davranışı için useEffect
   useEffect(() => {
@@ -51,6 +52,21 @@ const Header = ({ theme = "light" }) => {
       document.documentElement.classList.remove("no-scroll");
     };
   }, [isMenuOpen]);
+
+  // Click outside to close social nav
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      const socialNav = document.querySelector(".prague-social-nav");
+      if (socialNav && !socialNav.contains(event.target) && showSocial) {
+        setShowSocial(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showSocial]);
 
   return (
     <header
@@ -117,7 +133,7 @@ const Header = ({ theme = "light" }) => {
                       {services.map((service) => (
                         <li key={service.id}>
                           <Link
-                            href={`/services/${service.slug}`}
+                            href={`/services/${generateSlug(service.title)}`}
                             onClick={closeMenu}
                           >
                             {service.title}
@@ -173,36 +189,42 @@ const Header = ({ theme = "light" }) => {
           <LanguageSwitcher mode="dropdown" />
         </div>
 
-        {/* SOCIAL */}
+        {/* LANGUAGE SWITCHER */}
         <div className="prague-social-nav">
-          <a href="#" onClick={(e) => e.preventDefault()}>
-            <i className="fa fa-chain-broken" aria-hidden="true"></i>
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              setShowSocial(!showSocial);
+            }}
+          >
+            <i className="fa fa-globe" aria-hidden="true"></i>
           </a>
 
-          <ul className="social-content">
-            <li>
-              <a target="_blank" href="https://www.behance.net/foxthemes">
-                <i aria-hidden="true" className="fa fa-behance"></i>
-              </a>
-            </li>
-            <li>
-              <a target="_blank" href="https://twitter.com/foxthemes_offic">
-                <i aria-hidden="true" className="fa fa-twitter"></i>
-              </a>
-            </li>
-            <li>
-              <a
-                target="_blank"
-                href="https://www.facebook.com/foxthemes.page/"
-              >
-                <i aria-hidden="true" className="fa fa-facebook"></i>
-              </a>
-            </li>
-            <li>
-              <a target="_blank" href="https://www.pinterest.com/foxthemes/">
-                <i aria-hidden="true" className="fa fa-pinterest-p"></i>
-              </a>
-            </li>
+          <ul className={`social-content ${showSocial ? "visible" : ""}`}>
+            {languages
+              .filter(
+                (lang) =>
+                  lang &&
+                  lang.code &&
+                  (lang.isActive === undefined || lang.isActive === true)
+              )
+              .sort((a, b) => (a.order || 0) - (b.order || 0))
+              .map((lang) => (
+                <li key={lang.code}>
+                  <a
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      changeLanguage(lang.code);
+                      setShowSocial(false);
+                    }}
+                    className={lang.code === language ? "active" : ""}
+                  >
+                    <span>{lang.nativeName || lang.name}</span>
+                  </a>
+                </li>
+              ))}
           </ul>
         </div>
       </div>

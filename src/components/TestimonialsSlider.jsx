@@ -6,20 +6,24 @@ import "swiper/css/pagination";
 
 const testimonialsData = [
   {
-    author: "Hebele Hübele",
-    content: "Harika bir deneyim, tasarım detayları mükemmel.",
+    author: "Kullanıcı Odaklılık",
+    content:
+      "Her projemizde önceliğimiz; kullanıcıların ihtiyaçlarına, yaşam tarzına ve beklentilerine uygun çözümler üretmek.",
   },
   {
-    author: "Jennifer Hilbertson",
-    content: "Modern çizgilerle bezeli, sade ama etkileyici.",
+    author: "Sürdürülebilirlik",
+    content:
+      "Malzeme seçiminden enerji verimliliğine kadar her aşamada çevreye duyarlı, sürdürülebilir tasarım ilkelerini benimsiyoruz.",
   },
   {
-    author: "Lesley Grand",
-    content: "İç mimari uyumu gerçekten üst seviyede.",
+    author: "Fonksiyonellik ve Estetik Dengesi",
+    content:
+      "Mekanların hem işlevsel hem de estetik olarak tatmin edici olmasına özen gösteriyoruz.",
   },
   {
-    author: "John Frick",
-    content: "Işıklandırma ve renk kombinasyonu çok başarılı.",
+    author: "Modern ve Zamansız Çizgiler",
+    content:
+      "Tasarımda güncel yaklaşımları takip ederken, uzun ömürlü ve zamansız mekânlar yaratmayı hedefliyoruz.",
   },
 ];
 
@@ -31,8 +35,8 @@ const Testimonials = () => {
           <div className="col-sm-12 no-padd">
             <div className="column-inner">
               <div className="heading left dark">
-                <div className="subtitle">TESTIMONIALS</div>
-                <h2 className="title">They love us.</h2>
+                <div className="subtitle">TASARIM ANLAYIŞIMIZ</div>
+                <h2 className="title">Tasarımda denge, detayda zarafet.</h2>
               </div>
             </div>
           </div>

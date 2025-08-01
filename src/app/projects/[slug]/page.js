@@ -4,7 +4,11 @@ import React, { useEffect } from "react";
 import { useParams } from "next/navigation";
 import MainLayout from "../../../layouts/MainLayout";
 import Link from "next/link";
-import { getProjectBySlug, getAllProjects } from "../../../utils/mockData";
+import {
+  getProjectBySlug,
+  getAllProjects,
+  generateSlug,
+} from "../../../utils/mockData";
 import AutoBreadcrumb from "@/components/AutoBreadcrumb";
 
 const ProjectDetailPage = () => {
@@ -57,9 +61,10 @@ const ProjectDetailPage = () => {
                       fontSize: "24px",
                       padding: "50px 0 0 0",
                       fontWeight: "400",
+                      textAlign: "left",
                     }}
                   >
-                    SERVICES
+                    PROJECTS
                   </div>
                   <AutoBreadcrumb
                     textColor="black"
@@ -223,7 +228,9 @@ const ProjectDetailPage = () => {
         </div>
         <div className="row">
           {allProjects
-            .filter((p) => p.slug !== project.slug)
+            .filter(
+              (p) => generateSlug(p.title) !== generateSlug(project.title)
+            )
             .slice(0, 3)
             .map((relatedProject) => (
               <div key={relatedProject.id} className="col-md-4 col-sm-6">
@@ -237,22 +244,38 @@ const ProjectDetailPage = () => {
                       />
                     </div>
                     <div className="project-list-content">
-                      <div className="project-list-category">
-                        {relatedProject.year}
-                      </div>
-                      <h3 className="project-list-title">
-                        <Link
-                          href={`/projects/${relatedProject.slug}`}
-                          target="_self"
+                      <div
+                        className="project-list-header"
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          marginBottom: "10px",
+                        }}
+                      >
+                        <h3
+                          className="project-list-title"
+                          style={{ margin: 0, flex: 1 }}
                         >
-                          {relatedProject.title}
-                        </Link>
-                      </h3>
-                      <div className="project-list-excerpt">
-                        <p>{relatedProject.excerpt}</p>
+                          <Link
+                            href={`/projects/${generateSlug(
+                              relatedProject.title
+                            )}`}
+                            target="_self"
+                          >
+                            {relatedProject.title}
+                          </Link>
+                        </h3>
+                        <div
+                          className="project-list-category"
+                          style={{ marginLeft: "15px" }}
+                        >
+                          {relatedProject.year}
+                        </div>
                       </div>
+
                       <Link
-                        href={`/projects/${relatedProject.slug}`}
+                        href={`/projects/${generateSlug(relatedProject.title)}`}
                         className="project-list-link a-btn-arrow-2"
                         target="_self"
                       >

@@ -5,6 +5,14 @@ import { useParams } from "next/navigation";
 import MainLayout from "../../../layouts/MainLayout";
 import Image from "next/image";
 import Link from "next/link";
+<<<<<<< Updated upstream
+=======
+import {
+  getServiceBySlug,
+  getAllServices,
+  generateSlug,
+} from "../../../utils/mockData";
+>>>>>>> Stashed changes
 import AutoBreadcrumb from "@/components/AutoBreadcrumb";
 import { useLanguage, getText } from "@/context/LanguageContext";
 
@@ -138,6 +146,7 @@ const ServiceDetailPage = () => {
                       fontSize: "24px",
                       padding: "50px 0 0 0",
                       fontWeight: "400",
+                      textAlign: "left",
                     }}
                   >
                     {getText({
@@ -296,10 +305,17 @@ const ServiceDetailPage = () => {
                   }, language)}
                 </h1>
                 <ul style={{ paddingLeft: "30px", color: "#7e7d7d" }}>
+<<<<<<< Updated upstream
                   {relatedServices.map((relService) => (
                     <li key={relService._id}>
                       <Link href={`/services/${relService.slug}`}>
                         {getText(relService.title, language, "")}
+=======
+                  {allServices.map((service, index) => (
+                    <li key={index}>
+                      <Link href={`/services/${generateSlug(service.title)}`}>
+                        {service.title}
+>>>>>>> Stashed changes
                       </Link>
                     </li>
                   ))}

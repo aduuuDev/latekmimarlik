@@ -149,6 +149,7 @@ const ServicesPage = () => {
                       fontSize: "24px",
                       padding: "50px 0 0 0",
                       fontWeight: "400",
+                      textAlign: "left",
                     }}
                   >
                     {getText(pageData?.heroBanner?.title, language, "SERVICES")}

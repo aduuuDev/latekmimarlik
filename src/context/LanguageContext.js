@@ -1,17 +1,41 @@
-'use client';
+"use client";
 
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect } from "react";
 
 // Default languages (fallback if API fails)
 export const defaultLanguages = [
-  { code: 'tr', name: 'Türkçe', nativeName: 'Türkçe', rtl: false, isDefault: true },
-  { code: 'en', name: 'English', nativeName: 'English', rtl: false, isDefault: false },
-  { code: 'de', name: 'Deutsch', nativeName: 'Deutsch', rtl: false, isDefault: false },
-  { code: 'ar', name: 'Arabic', nativeName: 'العربية', rtl: true, isDefault: false }
+  {
+    code: "tr",
+    name: "Türkçe",
+    nativeName: "Türkçe",
+    rtl: false,
+    isDefault: true,
+  },
+  {
+    code: "en",
+    name: "English",
+    nativeName: "English",
+    rtl: false,
+    isDefault: false,
+  },
+  {
+    code: "de",
+    name: "Deutsch",
+    nativeName: "Deutsch",
+    rtl: false,
+    isDefault: false,
+  },
+  {
+    code: "ar",
+    name: "Arabic",
+    nativeName: "العربية",
+    rtl: true,
+    isDefault: false,
+  },
 ];
 
 // Default language code
-const defaultLanguageCode = 'tr';
+const defaultLanguageCode = "tr";
 
 // Create context
 const LanguageContext = createContext();
@@ -22,6 +46,7 @@ export function LanguageProvider({ children }) {
   const [language, setLanguage] = useState(defaultLanguageCode);
   const [languages, setLanguages] = useState(defaultLanguages);
   const [loading, setLoading] = useState(true);
+<<<<<<< Updated upstream
   
   // Initial client-side check for stored language preference
   useEffect(() => {
@@ -39,10 +64,14 @@ export function LanguageProvider({ children }) {
     }
   }, []);
   
+=======
+
+>>>>>>> Stashed changes
   // Fetch available languages from API
   useEffect(() => {
     // Set default language or use stored preference
     const setDefaultLanguage = (defaultCode, availableLanguages) => {
+<<<<<<< Updated upstream
       try {
         const storedLanguage = localStorage.getItem('preferredLanguage');
         console.log('Setting default language, stored preference:', storedLanguage);
@@ -63,48 +92,78 @@ export function LanguageProvider({ children }) {
             setLanguage(defaultCode || defaultLanguageCode);
             localStorage.setItem('preferredLanguage', defaultCode || defaultLanguageCode);
           }
+=======
+      const storedLanguage = localStorage.getItem("preferredLanguage");
+
+      if (
+        storedLanguage &&
+        availableLanguages.some((lang) => lang.code === storedLanguage)
+      ) {
+        setLanguage(storedLanguage);
+      } else {
+        // Try browser language
+        const browserLang = navigator.language?.split("-")[0];
+        if (
+          browserLang &&
+          availableLanguages.some((lang) => lang.code === browserLang)
+        ) {
+          setLanguage(browserLang);
+          localStorage.setItem("preferredLanguage", browserLang);
+        } else {
+          // Use default language from API or fallback
+          setLanguage(defaultCode || defaultLanguageCode);
+          localStorage.setItem(
+            "preferredLanguage",
+            defaultCode || defaultLanguageCode
+          );
+>>>>>>> Stashed changes
         }
       } catch (error) {
         console.error('Error in setDefaultLanguage:', error);
         setLanguage(defaultCode || defaultLanguageCode);
       }
     };
-    
+
     const fetchLanguages = async () => {
       try {
+<<<<<<< Updated upstream
         const response = await fetch('/api/languages', {
           cache: 'no-store',
           headers: {
             'Cache-Control': 'no-cache'
           }
         });
+=======
+        const response = await fetch("/api/languages");
+>>>>>>> Stashed changes
         const data = await response.json();
-        
+
         if (data.success && data.languages && data.languages.length > 0) {
           console.log('Languages fetched from API:', data.languages);
           setLanguages(data.languages);
-          
+
           // Find default language
-          const defaultLang = data.languages.find(lang => lang.isDefault);
+          const defaultLang = data.languages.find((lang) => lang.isDefault);
           if (defaultLang) {
             setDefaultLanguage(defaultLang.code, data.languages);
           }
         }
       } catch (error) {
-        console.error('Dil verileri çekilirken hata:', error);
+        console.error("Dil verileri çekilirken hata:", error);
       } finally {
         setLoading(false);
       }
     };
-    
+
     fetchLanguages();
   }, []);
-  
+
   // Apply language settings once languages are loaded
   const [languagesLoaded, setLanguagesLoaded] = useState(false);
-  
+
   useEffect(() => {
     if (!loading && !languagesLoaded) {
+<<<<<<< Updated upstream
       try {
         const storedLanguage = localStorage.getItem('preferredLanguage');
         console.log('Languages loaded check, stored preference:', storedLanguage);
@@ -120,17 +179,38 @@ export function LanguageProvider({ children }) {
             setLanguage(defaultLang.code);
             localStorage.setItem('preferredLanguage', defaultLang.code);
           }
+=======
+      const storedLanguage = localStorage.getItem("preferredLanguage");
+
+      if (
+        storedLanguage &&
+        languages.some((lang) => lang.code === storedLanguage)
+      ) {
+        setLanguage(storedLanguage);
+      } else {
+        // Find default language
+        const defaultLang = languages.find((lang) => lang.isDefault);
+        if (defaultLang) {
+          setLanguage(defaultLang.code);
+          localStorage.setItem("preferredLanguage", defaultLang.code);
+>>>>>>> Stashed changes
         }
       } catch (error) {
         console.error('Error in language loading effect:', error);
       } finally {
         setLanguagesLoaded(true);
       }
+<<<<<<< Updated upstream
+=======
+
+      setLanguagesLoaded(true);
+>>>>>>> Stashed changes
     }
   }, [loading, languages, languagesLoaded]);
-  
+
   // Change language function
   const changeLanguage = (newLanguage) => {
+<<<<<<< Updated upstream
     if (languages.some(lang => lang.code === newLanguage)) {
       console.log('Changing language to:', newLanguage);
       setLanguage(newLanguage);
@@ -146,17 +226,22 @@ export function LanguageProvider({ children }) {
       }
     } else {
       console.warn('Attempted to set invalid language:', newLanguage);
+=======
+    if (languages.some((lang) => lang.code === newLanguage)) {
+      setLanguage(newLanguage);
+      localStorage.setItem("preferredLanguage", newLanguage);
+>>>>>>> Stashed changes
     }
   };
-  
+
   // Context value
   const value = {
     language,
     changeLanguage,
     languages,
-    loading
+    loading,
   };
-  
+
   return (
     <LanguageContext.Provider value={value}>
       {children}
@@ -168,31 +253,31 @@ export function LanguageProvider({ children }) {
 export function useLanguage() {
   const context = useContext(LanguageContext);
   if (context === undefined) {
-    throw new Error('useLanguage must be used within a LanguageProvider');
+    throw new Error("useLanguage must be used within a LanguageProvider");
   }
   return context;
 }
 
 // Helper function to get text in current language
-export function getText(textObject, language, fallback = '') {
+export function getText(textObject, language, fallback = "") {
   if (!textObject) return fallback;
-  
+
   // If textObject has the current language, return it
   if (textObject[language]) return textObject[language];
-  
+
   // If not, try English as a fallback (if the current language isn't English)
-  if (language !== 'en' && textObject.en) return textObject.en;
-  
+  if (language !== "en" && textObject.en) return textObject.en;
+
   // If there's a default language in textObject, use it
-  for (const lang of defaultLanguages.map(l => l.code)) {
+  for (const lang of defaultLanguages.map((l) => l.code)) {
     if (textObject[lang] && lang !== language) return textObject[lang];
   }
-  
+
   // If all fails, return the first non-empty language value
   for (const lang in textObject) {
     if (textObject[lang]) return textObject[lang];
   }
-  
+
   // If absolutely nothing works, return the fallback
   return fallback;
 }
